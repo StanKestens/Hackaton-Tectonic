@@ -10,6 +10,9 @@ Outputs (data/):
   transactions.csv    monthly spend per category        (tabular LightGBM baseline)
   events.csv          flattened multi-domain event stream (TIMeSynC encoder input)
   intents.csv         timestamped intents                (TIMeSynC decoder input/target)
+  balances.csv        month-end current/savings/investments/debt per customer
+  holdings.csv        investment positions (units) + prices.csv monthly prices per instrument
+  raw_transactions.csv  all notable raw transactions in the KBC schema
   sample_timelines.json  a few simulated customers in the KBC mock JSON schema
 Run: python simulate.py
 """
@@ -38,7 +41,18 @@ def band(x, edges):
     return str(int(np.searchsorted(edges, x)))
 
 
-def simulate_customer(cid, rng):
+def make_prices(rng):
+    """Monthly price path per instrument (geometric random walk)."""
+    rows = []
+    for item, _, _, mu, vol in INSTRUMENTS:
+        p = float(rng.uniform(20, 400))
+        for m in range(N_MONTHS):
+            rows.append((item, m, round(p, 2)))
+            p *= float(np.exp((mu - vol ** 2 / 2) / 12 + vol / np.sqrt(12) * rng.normal()))
+    return pd.DataFrame(rows, columns=["item", "month", "price"])
+
+
+def simulate_customer(cid, rng, prices):
     persona = str(rng.choice(list(PERSONAS)))
     cfg = PERSONAS[persona]
     age = int(rng.integers(*cfg["age"]))
@@ -49,6 +63,8 @@ def simulate_customer(cid, rng):
     events, intents, raw_txs, products = [], [], [], {}
     mult = np.ones((N_MONTHS, len(CATEGORIES)))
     extra = np.zeros((N_MONTHS, len(CATEGORIES)))   # big one-off purchases added to monthly totals
+    paid_from_savings = np.zeros(N_MONTHS)           # big purchases drain the savings account
+    invest_in = []                                    # (month, amount) money moved into funds
 
     def add_product(p, ts):
         if p not in products or ts < products[p]:
@@ -68,13 +84,14 @@ def simulate_customer(cid, rng):
         decoy = (not real) and rng.random() < DECOY_RATE * prob * 2
         if not (real or decoy):
             continue
-        m = int(rng.integers(LEAD, N_MONTHS))
+        lead = ev.get("lead_months", LEAD)
+        m = int(rng.integers(lead, N_MONTHS))
         T = rand_time_in_month(m, rng)
 
-        # warm-up: spend shift in the LEAD months before, and app searches
+        # warm-up: spend shift in the lead months before, and app searches
         for cat, f in ev["spend_shift"].items():
-            mult[m - LEAD:m, CATEGORIES.index(cat)] *= f
-        first_signal = T - pd.Timedelta(days=float(rng.uniform(20, LEAD * 30)))
+            mult[m - lead:m, CATEGORIES.index(cat)] *= f
+        first_signal = T - pd.Timedelta(days=float(rng.uniform(20, lead * 30)))
         for _ in range(int(rng.integers(1, 4))):
             ts = first_signal + (T - first_signal) * float(rng.uniform(0, 0.9))
             events.append((cid, ts, "digital", "search", str(rng.choice(ev["searches"])), "NONE"))
@@ -94,12 +111,16 @@ def simulate_customer(cid, rng):
                   "currency": "EUR", "type": ttype, "memo": memo}
             raw_txs.append(tx)
             mm = (ts.year - T0.year) * 12 + ts.month - T0.month
-            if mm < N_MONTHS:
+            if 0 <= mm < N_MONTHS:
                 extra[mm, CATEGORIES.index(MCC_CATEGORY.get(mcc, "shopping"))] += tx["amount"]
+                if ttype != "Direct Debit" and tx["amount"] > 1000:
+                    paid_from_savings[mm] += tx["amount"]
+                if mcc == 6211:
+                    invest_in.append((mm, tx["amount"]))
 
         # follow-up intent right after the purchase (e.g. INSURE_CAR), before the policy starts
         if len(ev["intents"]) > 1:
-            gap = offsets[1] if len(offsets) > 1 and offsets[1] > 0 else 20
+            gap = min([o for o in offsets if o > 0], default=20)
             intents.append((cid, T + DAY * float(rng.uniform(0.05, 0.9) * gap), ev["intents"][1], ev_name))
         if len(ev["intents"]) > 2 and rng.random() < 0.6:
             intents.append((cid, T + DAY * float(offsets[-1] + rng.uniform(3, 30)), ev["intents"][2], ev_name))
@@ -117,6 +138,41 @@ def simulate_customer(cid, rng):
     for m in range(N_MONTHS):
         for j, cat in enumerate(CATEGORIES):
             events.append((cid, month_start(m + 1), "monthly_spend", cat, round(float(amounts[m, j]), 2), "NONE"))
+
+    # ---- balances (month-end) and investment holdings ----
+    sav_rng, inv_share, pf_rng = WEALTH[persona]
+    item_meta = {i[0]: i for i in INSTRUMENTS}
+    px = prices.pivot(index="month", columns="item", values="price")
+    holdings = []                                            # (item, units, start_month)
+    if rng.random() < inv_share:
+        value = income * float(rng.uniform(*pf_rng))
+        picks = rng.choice(len(INSTRUMENTS), size=int(rng.integers(2, 7)), replace=False)
+        for k, w in zip(picks, rng.dirichlet(np.ones(len(picks)))):
+            item = INSTRUMENTS[k][0]
+            holdings.append((item, value * w / px.loc[0, item], 0))
+    for mm, amt in invest_in:                                # wealth_building: buys a KBC fund
+        item = str(rng.choice(["fund:KBC_ECO", "fund:KBC_TECH", "fund:KBC_PENSION"]))
+        holdings.append((item, amt / px.loc[mm, item], mm))
+    loans = []                                               # (start_month, principal, monthly repayment share)
+    for p, ts in products.items():
+        mm = (ts.year - T0.year) * 12 + ts.month - T0.month
+        if p == "home_loan":
+            loans.append((mm, float(rng.uniform(150_000, 350_000)), 1 / 240))
+        elif p == "car_loan":
+            loans.append((mm, float(rng.uniform(8_000, 25_000)), 1 / 60))
+    savings = income * float(rng.uniform(*sav_rng))
+    bal_rows = []
+    for m in range(N_MONTHS):
+        savings = max(0.0, savings + amounts[m, CATEGORIES.index("savings")] - paid_from_savings[m]
+                      - sum(a for mm, a in invest_in if mm == m))
+        current = income * float(rng.uniform(0.2, 1.0)) - max(0.0, amounts[m].sum() - income) * 0.5
+        inv = sum(u * px.loc[m, it] for it, u, start in holdings if m >= start)
+        debt = sum(pr * max(0.0, 1 - rate * (m - st)) for st, pr, rate in loans if m >= st)
+        bal_rows.append((cid, m, round(current, 2), round(savings, 2), round(inv, 2), round(debt, 2)))
+        # low-resolution balance stream for the model (known at the start of next month)
+        events.append((cid, month_start(m + 1), "balance", "savings_account", round(savings, 2), "NONE"))
+        events.append((cid, month_start(m + 1), "balance", "investments", round(inv, 2), "NONE"))
+    hold_rows = [(cid, it, item_meta[it][1], item_meta[it][2], round(u, 4), st) for it, u, st in holdings]
 
     # ---- digital logins, routine intents, service contacts ----
     for m in range(N_MONTHS):
@@ -139,23 +195,25 @@ def simulate_customer(cid, rng):
         events.append((cid, ts, "product", "enrolled", p, p))
 
     if sparse:   # like the KBC mock: only transactions/products/profile are known
-        events = [e for e in events if e[2] not in ("monthly_spend", "digital", "service")]
+        events = [e for e in events if e[2] not in ("monthly_spend", "digital", "service", "balance")]
 
     events = [e for e in events if e[1] < end]
     intents = [i for i in intents if i[1] < end]
     prod_rows = [(cid, p, int((ts.year - T0.year) * 12 + ts.month - T0.month), ts)
                  for p, ts in products.items() if ts < end]
     cust = {"customer": cid, "persona": persona, "age": age, "income": income, "sparse": sparse}
-    return cust, prod_rows, monthly, events, intents, raw_txs
+    return cust, prod_rows, monthly, events, intents, raw_txs, bal_rows, hold_rows
 
 
 def simulate():
     rng = np.random.default_rng(SEED)
-    custs, prods, monthly, events, intents, samples = [], [], [], [], [], []
+    prices = make_prices(rng)
+    custs, prods, monthly, events, intents, samples, bals, holds, raws = [], [], [], [], [], [], [], [], []
     for n in range(N_CUSTOMERS):
         cid = f"SIM{n:05d}"
-        c, p, mo, ev, it, raw = simulate_customer(cid, rng)
-        custs.append(c); prods += p; monthly.append(mo); events += ev; intents += it
+        c, p, mo, ev, it, raw, bal, hold = simulate_customer(cid, rng, prices)
+        custs.append(c); prods += p; monthly.append(mo); events += ev; intents += it; bals += bal; holds += hold
+        raws += [{"customer": cid, **t} for t in raw]
         if n < 30 and raw:
             samples.append({"client_id": cid, "timeline": sorted(raw, key=lambda t: t["timestamp"])})
 
@@ -172,6 +230,12 @@ def simulate():
     tx.to_csv(os.path.join(DATA_DIR, "transactions.csv"), index=False)
     ev.to_csv(os.path.join(DATA_DIR, "events.csv"), index=False)
     it.to_csv(os.path.join(DATA_DIR, "intents.csv"), index=False)
+    pd.DataFrame(bals, columns=["customer", "month", "current_account", "savings_account", "investments", "debt"]).to_csv(
+        os.path.join(DATA_DIR, "balances.csv"), index=False)
+    pd.DataFrame(holds, columns=["customer", "item", "label", "asset_class", "units", "start_month"]).to_csv(
+        os.path.join(DATA_DIR, "holdings.csv"), index=False)
+    prices.to_csv(os.path.join(DATA_DIR, "prices.csv"), index=False)
+    pd.DataFrame(raws).to_csv(os.path.join(DATA_DIR, "raw_transactions.csv"), index=False)
     with open(os.path.join(DATA_DIR, "sample_timelines.json"), "w") as f:
         json.dump(samples, f, indent=2, ensure_ascii=False)
 

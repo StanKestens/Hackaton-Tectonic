@@ -1,8 +1,23 @@
 """Builds the long-format financial report CSV (schema: report_schema.py) from a per-client spec.
 
-A spec is a plain dict with raw facts (income, balances, monthly expenses, holdings, products, model
-predictions...). Everything derivable (summaries, cashflow, allocation, net worth) is computed here,
-so the mock and the real pipeline produce exactly the same shape.
+A spec is a plain dict of actual data + model predictions. Every key is optional: sections without
+data are simply left out (e.g. KBC mock clients only have transactions). Derived numbers
+(summaries, cashflow, allocation, net worth) are computed here, so the mock and the real
+pipeline produce exactly the same shape.
+
+spec keys:
+  client_id, as_of                      str
+  profile        {key: value}
+  income         [(period, amount)]
+  balances       {current_account, savings_account, total_debt}      (investments come from holdings)
+  balance_history[(period, current, savings, investments, debt)]
+  expenses       {period: {category: amount}}
+  holdings       [(item, label, asset_class, units, price)]
+  products       [(product, since, family)]
+  transactions   [{timestamp, merchant, mcc, amount, type, memo}]
+  life_events    [(event, label, probability, evidence)]
+  needs          [(need, label, probability, evidence, life_event)]
+  propensity     [(product, label, probability, evidence)]
 """
 import csv
 import os
@@ -11,113 +26,113 @@ import numpy as np
 
 from report_schema import COLUMNS
 
-LABELS = {"housing": "Housing", "food": "Groceries & food", "transport": "Transport", "utilities": "Utilities & insurance",
-          "health": "Health", "leisure": "Leisure & travel", "shopping": "Shopping", "childcare": "Children",
-          "savings": "Savings transfers"}
+LABELS = {"housing": "Housing", "food": "Groceries & food", "transport": "Transport",
+          "utilities": "Utilities & insurance", "health": "Health", "leisure": "Leisure & travel",
+          "shopping": "Shopping", "savings": "Savings transfers", "total": "Total spending"}
+PRODUCT_FAMILY = {"savings_account": "savings", "credit_card": "payments", "car_loan": "loans", "home_loan": "loans",
+                  "car_insurance": "insurance", "home_insurance": "insurance", "life_insurance": "insurance",
+                  "bike_insurance": "insurance", "investment_account": "investments"}
 
 
-def _row(spec, section, item, **kw):
-    r = {c: "" for c in COLUMNS}
-    r.update(client_id=spec["client_id"], as_of=spec["as_of"], section=section, item=item)
-    r.update({k: ("" if v is None else v) for k, v in kw.items()})
-    if isinstance(r["value"], float):
-        r["value"] = round(r["value"], 2)
-    if isinstance(r["probability"], float):
-        r["probability"] = round(r["probability"], 3)
-    return r
+def nice(key):
+    return key.replace("_", " ").capitalize()
 
 
 def build_rows(spec):
     R = []
-    add = lambda section, item, **kw: R.append(_row(spec, section, item, **kw))
 
-    # profile
-    for k, v in spec["profile"].items():
-        add("profile", k, label=k.replace("_", " ").capitalize(), value=v, unit="text", ui_hint="hidden")
+    def add(section, item, source, **kw):
+        r = {c: "" for c in COLUMNS}
+        r.update(client_id=spec["client_id"], as_of=spec["as_of"], section=section, item=item, source=source)
+        for k, v in kw.items():
+            if isinstance(v, (float, np.floating)):
+                v = round(float(v), 4 if k == "probability" else 2)
+            r[k] = "" if v is None else v
+        R.append(r)
 
-    # income
-    inc = spec["income"]                                  # [(period, amount)]
-    for period, amt in inc:
-        add("income", "net_income", label="Net income", value=float(amt), unit="EUR", period=period, ui_hint="chart")
-    avg_inc = float(np.mean([a for _, a in inc]))
-    add("income", "avg_monthly_income", label="Average monthly income", value=avg_inc, unit="EUR", ui_hint="card")
+    for k, v in spec.get("profile", {}).items():
+        add("profile", k, "actual", label=nice(k), value=v, unit="text")
 
-    # balances
-    b = dict(spec["balances"])
-    b["investments"] = float(sum(h[3] for h in spec["holdings"]))
-    b["total_assets"] = b["current_account"] + b["savings_account"] + b["investments"]
-    b["net_worth"] = b["total_assets"] - b["total_debt"]
-    for k, v in b.items():
-        add("balances", k, label=k.replace("_", " ").capitalize(), value=float(v), unit="EUR",
-            ui_hint="hero" if k == "net_worth" else "card")
+    avg_inc = None
+    if spec.get("income"):
+        for period, amt in spec["income"]:
+            add("income", "net_income", "actual", label="Net income", value=float(amt), unit="EUR", period=period)
+        avg_inc = float(np.mean([a for _, a in spec["income"]]))
+        add("income", "avg_monthly_income", "derived", label="Average monthly income", value=avg_inc, unit="EUR")
 
-    # monthly expenses (time series)
-    exp = spec["expenses"]                                # {period: {category: amount}}
-    periods = sorted(exp)
-    cats = sorted({c for p in exp.values() for c in p})
-    for p in periods:
-        for c in cats:
-            add("monthly_expenses", c, label=LABELS.get(c, c), value=float(exp[p].get(c, 0.0)), unit="EUR",
-                period=p, category=c, ui_hint="chart")
-        add("monthly_expenses", "total", label="Total spending", value=float(sum(exp[p].values())), unit="EUR",
-            period=p, category="total", ui_hint="chart")
+    inv_total = sum(u * p for _, _, _, u, p in spec.get("holdings", []))
+    if "balances" in spec:
+        b = spec["balances"]
+        for k in ("current_account", "savings_account", "total_debt"):
+            add("balances", k, "actual", label=nice(k), value=float(b[k]), unit="EUR")
+        add("balances", "investments", "actual", label="Investments", value=inv_total, unit="EUR")
+        assets = b["current_account"] + b["savings_account"] + inv_total
+        add("balances", "total_assets", "derived", label="Total assets", value=assets, unit="EUR")
+        add("balances", "net_worth", "derived", label="Net worth", value=assets - b["total_debt"], unit="EUR")
 
-    # expense summary: last 3 months vs 3 before
-    last3, prev3 = periods[-3:], periods[-6:-3]
-    for c in cats + ["total"]:
-        get = (lambda p: sum(exp[p].values())) if c == "total" else (lambda p, c=c: exp[p].get(c, 0.0))
-        a3, p3 = np.mean([get(p) for p in last3]), np.mean([get(p) for p in prev3]) if prev3 else np.nan
-        chg = (a3 - p3) / p3 * 100 if prev3 and p3 > 0 else 0.0
-        lab = LABELS.get(c, "Total spending")
-        add("expense_summary", f"{c}_avg_3m", label=f"{lab}: avg last 3 months", value=float(a3), unit="EUR", category=c, ui_hint="list")
-        add("expense_summary", f"{c}_change_pct", label=f"{lab}: change vs previous 3 months", value=float(chg), unit="pct", category=c,
-            ui_hint="badge" if abs(chg) > 25 else "list")
-        add("expense_summary", f"{c}_share_of_income_pct", label=f"{lab}: share of income", value=float(a3 / avg_inc * 100),
-            unit="pct", category=c, ui_hint="list")
+    for period, cur, sav, inv, debt in spec.get("balance_history", []):
+        for k, v in (("current_account", cur), ("savings_account", sav), ("investments", inv), ("total_debt", debt)):
+            add("balance_history", k, "actual", label=nice(k), value=float(v), unit="EUR", period=period)
 
-    # cashflow
-    spend = np.mean([sum(exp[p].values()) - exp[p].get("savings", 0.0) for p in last3])
-    surplus = avg_inc - spend
-    add("cashflow", "avg_monthly_surplus", label="Average monthly surplus", value=float(surplus), unit="EUR", ui_hint="card")
-    add("cashflow", "savings_rate_pct", label="Savings rate", value=float(surplus / avg_inc * 100), unit="pct", ui_hint="card")
-    add("cashflow", "emergency_buffer_months", label="Emergency buffer",
-        value=float((b["current_account"] + b["savings_account"]) / max(spend, 1)), unit="months", ui_hint="card")
+    exp = spec.get("expenses")
+    if exp:
+        periods = sorted(exp)
+        cats = sorted({c for p in exp.values() for c in p})
+        for p in periods:
+            for c in cats:
+                add("monthly_expenses", c, "actual", label=LABELS.get(c, nice(c)), value=float(exp[p].get(c, 0.0)),
+                    unit="EUR", period=p, category=c)
+            add("monthly_expenses", "total", "actual", label="Total spending", value=float(sum(exp[p].values())),
+                unit="EUR", period=p, category="total")
+        last3, prev3 = periods[-3:], periods[-6:-3]
+        for c in cats + ["total"]:
+            get = (lambda p: sum(exp[p].values())) if c == "total" else (lambda p, c=c: exp[p].get(c, 0.0))
+            a3 = float(np.mean([get(p) for p in last3]))
+            add("expense_summary", f"{c}_avg_3m", "derived", label=f"{LABELS.get(c, nice(c))}: average last 3 months",
+                value=a3, unit="EUR", category=c)
+            if prev3:
+                p3 = float(np.mean([get(p) for p in prev3]))
+                add("expense_summary", f"{c}_change_pct", "derived", label=f"{LABELS.get(c, nice(c))}: change vs previous 3 months",
+                    value=(a3 - p3) / p3 * 100 if p3 > 0 else 0.0, unit="pct", category=c)
+            if avg_inc:
+                add("expense_summary", f"{c}_share_of_income_pct", "derived", label=f"{LABELS.get(c, nice(c))}: share of income",
+                    value=a3 / avg_inc * 100, unit="pct", category=c)
+        if avg_inc:
+            spend = float(np.mean([sum(v for k, v in exp[p].items() if k != "savings") for p in last3]))
+            add("cashflow", "avg_monthly_surplus", "derived", label="Average monthly surplus (income - spending)",
+                value=avg_inc - spend, unit="EUR")
+            add("cashflow", "savings_rate_pct", "derived", label="Savings rate", value=(avg_inc - spend) / avg_inc * 100, unit="pct")
+            if "balances" in spec:
+                liquid = spec["balances"]["current_account"] + spec["balances"]["savings_account"]
+                add("cashflow", "emergency_buffer_months", "derived", label="Liquid savings / monthly spending",
+                    value=liquid / max(spend, 1.0), unit="months")
 
-    # investments
-    total_inv = b["investments"]
-    for item, label, asset_class, value in spec["holdings"]:
-        add("investments", item, label=label, value=float(value), unit="EUR", category=asset_class, ui_hint="list")
-    for ac in sorted({h[2] for h in spec["holdings"]}):
-        v = sum(h[3] for h in spec["holdings"] if h[2] == ac)
-        add("investments", f"allocation_{ac}_pct", label=f"Allocation: {ac}", value=float(v / total_inv * 100),
-            unit="pct", category=ac, ui_hint="chart")
+    for item, label, ac, units, price in spec.get("holdings", []):
+        add("investments", item, "actual", label=label, value=units * price, unit="EUR", category=ac,
+            evidence=f"{units:.4f} units @ {price:.2f}")
+    for ac in sorted({h[2] for h in spec.get("holdings", [])}):
+        v = sum(u * p for _, _, a, u, p in spec["holdings"] if a == ac)
+        add("investments", f"allocation_{ac}_pct", "derived", label=f"Share of portfolio: {ac}",
+            value=v / inv_total * 100 if inv_total else 0.0, unit="pct", category=ac)
 
-    for product, since, family in spec["products"]:
-        add("products_held", product, label=product.replace("_", " ").capitalize(), value="active", unit="text",
-            period=since, category=family, ui_hint="list")
+    for product, since, family in spec.get("products", []):
+        add("products_held", product, "actual", label=nice(product), value="active", unit="text", period=since,
+            category=family)
 
-    for event, label, prob, reason, stage in spec["life_events"]:
-        add("life_events", event, label=label, value=stage, unit="text", category=event, probability=float(prob),
-            reason=reason, ui_hint="hero" if prob >= 0.6 else "card")
+    for tx in spec.get("transactions", []):
+        add("recent_transactions", tx.get("tx_id", ""), "actual", label=f"{tx['merchant']}: {tx['memo']}",
+            value=float(tx["amount"]), unit="EUR", period=str(tx["timestamp"])[:10], category=f"mcc_{tx['mcc']}",
+            evidence=tx["type"])
 
-    for i, (need, label, prob, reason, event) in enumerate(spec["needs"], 1):
-        add("next_needs_30d", need, label=label, value=float(prob), unit="pct", category=event, rank=i,
-            probability=float(prob), reason=reason, ui_hint="card" if i <= 2 else "list")
-
-    for i, (item, label, cat, amount, prob, reason) in enumerate(spec["buys"][:5], 1):
-        add("next_buys", item, label=label, value=float(amount), unit="EUR", category=cat, rank=i,
-            probability=float(prob), reason=reason, ui_hint="card")
-
-    for i, (product, label, prob, reason, family) in enumerate(spec["recommendations"], 1):
-        add("recommendations", product, label=label, value=float(prob), unit="pct", category=family, rank=i,
-            probability=float(prob), reason=reason, ui_hint="hero" if i == 1 else "card")
-
-    for i, (module, label, reason) in enumerate(spec["modules"], 1):
-        add("personalization", module, label=label, value="true", unit="bool", rank=i, reason=reason,
-            ui_hint="hero" if i == 1 else "card")
-
-    for item, label, value, unit, reason in spec["alerts"]:
-        add("alerts", item, label=label, value=value, unit=unit, reason=reason, ui_hint="alert")
+    for rank, (event, label, prob, ev) in enumerate(spec.get("life_events", []), 1):
+        add("life_events", event, "model:timesync", label=label, value=prob * 100, unit="pct", category=event,
+            rank=rank, probability=prob, evidence=ev)
+    for rank, (need, label, prob, ev, event) in enumerate(spec.get("needs", []), 1):
+        add("next_needs_30d", need, "model:timesync", label=label, value=prob * 100, unit="pct", category=event,
+            rank=rank, probability=prob, evidence=ev)
+    for rank, (product, label, prob, ev) in enumerate(spec.get("propensity", []), 1):
+        add("product_propensity", product, "model:lightgbm", label=label, value=prob * 100, unit="pct",
+            category=PRODUCT_FAMILY.get(product, ""), rank=rank, probability=prob, evidence=ev)
     return R
 
 

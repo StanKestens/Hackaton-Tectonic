@@ -11,7 +11,7 @@ import pandas as pd
 EVENT_COLUMNS = ["customer", "timestamp", "domain", "field", "value", "product"]
 
 # numeric fields get quantile-binned; everything else is a categorical string token
-NUMERIC_DOMAINS = {"monthly_spend"}
+NUMERIC_DOMAINS = {"monthly_spend", "balance"}
 NUMERIC_FIELDS = {"amount"}
 
 # domains that are "static" customer attributes: always visible to every query
@@ -19,7 +19,7 @@ STATIC_DOMAINS = {"profile"}
 
 # MCC -> spending category (used for monthly aggregates / tabular baseline)
 MCC_CATEGORY = {5511: "transport", 5541: "transport", 9311: "transport", 8111: "housing",
-                6012: "housing", 6300: "utilities", 5940: "leisure", 8062: "health",
+                6012: "housing", 6300: "utilities", 5940: "leisure", 8062: "health", 8011: "health", 5621: "shopping",
                 5641: "shopping", 6211: "savings", 5411: "food"}
 
 # memo / merchant keywords -> which bank product the transaction is about (order matters)

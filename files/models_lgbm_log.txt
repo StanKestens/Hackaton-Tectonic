@@ -1,0 +1,10 @@
+skip credit_card: too few positives
+           product  base_rate  pr_auc_logit  pr_auc_lgbm  prec@5%_logit  prec@5%_lgbm
+   savings_account      0.013         0.711        0.653          0.261         0.261
+          car_loan      0.022         0.238        0.266          0.229         0.290
+     car_insurance      0.052         0.641        0.604          0.670         0.617
+         home_loan      0.031         0.323        0.530          0.266         0.411
+    home_insurance      0.031         0.355        0.553          0.282         0.419
+    life_insurance      0.056         0.651        0.820          0.637         0.779
+    bike_insurance      0.042         0.539        0.537          0.517         0.500
+investment_account      0.037         0.500        0.541          0.492         0.517

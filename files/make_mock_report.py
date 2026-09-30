@@ -1,12 +1,14 @@
 """Generate a MOCK financial report (report/financial_report_mock.csv) for the frontend team.
 
-Hand-written personas, so the frontend can build every module before the models are wired in:
+Hand-written personas, so the frontend can start before the models are wired in:
   BE9101  bought a car            (KBC mock)      BE7701  wealthy stock investor
   BE4402  bought a house          (KBC mock)      BE3303  baby on the way
   BE5505  bought an e-bike        (KBC mock)      BE6606  student, cashflow stress
 The real pipeline produces exactly the same columns/sections (see report_schema.py).
 Run: python make_mock_report.py
 """
+import json
+
 import numpy as np
 import pandas as pd
 
@@ -220,8 +222,29 @@ SPECS = [
 ]
 
 
+KBC_TX = {c["client_id"]: c["timeline"] for c in json.load(open("data/kbc_mock.json"))}
+PRICE = {"stocks": 180.0, "etf": 95.0, "funds": 42.0, "bonds": 101.0}
+
+
+def to_report_spec(s):
+    """Hand-written persona -> report spec: only actual data + predictions (no UI decisions)."""
+    s = dict(s)
+    s["holdings"] = [(item, label, ac, value / PRICE[ac], PRICE[ac]) for item, label, ac, value in s["holdings"]]
+    s["life_events"] = [(e, label, p, ev) for e, label, p, ev, _stage in s["life_events"]]
+    s["propensity"] = [(prod, label, p, ev) for prod, label, p, ev, _fam in s.pop("recommendations")]
+    b = s["balances"]
+    inv = sum(u * p for *_, u, p in s["holdings"])
+    s["balance_history"] = [(p, b["current_account"] * rng.normal(1, 0.15), b["savings_account"] * (0.9 + 0.01 * i),
+                             inv * (0.85 + 0.0125 * i), b["total_debt"] * (1 + 0.004 * (12 - i)))
+                            for i, p in enumerate(months_before(s["as_of"]))]
+    s["transactions"] = KBC_TX.get(s["client_id"], [])
+    for k in ("buys", "modules", "alerts"):
+        s.pop(k, None)
+    return s
+
+
 if __name__ == "__main__":
-    rows = write_csv(SPECS, "report/financial_report_mock.csv")
+    rows = write_csv([to_report_spec(s) for s in SPECS], "report/financial_report_mock.csv")
     df = pd.DataFrame(rows)
     print(f"wrote report/financial_report_mock.csv: {len(df)} rows, {df.client_id.nunique()} clients")
     print(df.groupby("section").size().to_string())

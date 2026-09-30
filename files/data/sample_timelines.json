@@ -1,151 +1,171 @@
 [
   {
-    "client_id": "SIM00001",
+    "client_id": "SIM00000",
     "timeline": [
       {
-        "tx_id": "TX-SIM00001-0",
-        "timestamp": "2026-06-15T22:06:15.073903716Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 24816.11,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00001-1",
-        "timestamp": "2026-06-28T15:07:46.015580450Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1372.37,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00001-2",
-        "timestamp": "2026-06-29T17:38:21.181362284Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 29.4,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00001-3",
-        "timestamp": "2026-06-29T21:16:00.449812585Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 34.52,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00001-4",
-        "timestamp": "2026-12-15T03:49:14.059474443Z",
+        "tx_id": "TX-SIM00000-0",
+        "timestamp": "2025-06-23T19:23:42.549883218Z",
         "merchant": "Garage Cardoen",
         "mcc": 5511,
-        "amount": 25527.02,
+        "amount": 34919.94,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Aankoop wagen"
       },
       {
-        "tx_id": "TX-SIM00001-5",
-        "timestamp": "2026-12-17T04:08:48.183449867Z",
+        "tx_id": "TX-SIM00000-1",
+        "timestamp": "2025-06-26T03:04:52.567962437Z",
         "merchant": "Vlaamse Belastingdienst - BIV",
         "mcc": 9311,
-        "amount": 710.32,
+        "amount": 327.13,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Belasting op inverkeerstelling"
       },
       {
-        "tx_id": "TX-SIM00001-6",
-        "timestamp": "2026-12-17T22:01:32.771599191Z",
+        "tx_id": "TX-SIM00000-2",
+        "timestamp": "2025-06-27T02:39:29.643955152Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 72.99,
+        "amount": 49.58,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "Polis Auto BA + Omnium premie"
+      },
+      {
+        "tx_id": "TX-SIM00000-3",
+        "timestamp": "2026-05-18T12:56:22.907689229Z",
+        "merchant": "Fietsen De Geus",
+        "mcc": 5940,
+        "amount": 4837.75,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "E-Bike aankoop"
+      },
+      {
+        "tx_id": "TX-SIM00000-4",
+        "timestamp": "2026-05-19T10:38:34.620426257Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 22.25,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "KBC Fietsverzekering Omnium + Diefstal"
+      },
+      {
+        "tx_id": "TX-SIM00000-5",
+        "timestamp": "2026-06-22T02:25:52.074474780Z",
+        "merchant": "KBC Asset Management",
+        "mcc": 6211,
+        "amount": 19623.89,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Instap beleggingsfonds"
       }
     ]
   },
   {
-    "client_id": "SIM00002",
+    "client_id": "SIM00001",
     "timeline": [
       {
-        "tx_id": "TX-SIM00002-4",
-        "timestamp": "2025-10-03T11:46:31.277483789Z",
-        "merchant": "AZ Sint-Jan Ziekenhuis",
-        "mcc": 8062,
-        "amount": 669.6,
+        "tx_id": "TX-SIM00001-3",
+        "timestamp": "2025-10-23T10:01:56.176289966Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 99.42,
         "currency": "EUR",
         "type": "Bancontact",
-        "memo": "Ziekenhuisfactuur bevalling"
+        "memo": "Consultatie gynaecologie"
       },
       {
-        "tx_id": "TX-SIM00002-5",
-        "timestamp": "2025-10-08T05:00:45.788510377Z",
+        "tx_id": "TX-SIM00001-0",
+        "timestamp": "2025-11-27T09:49:12.443963029Z",
+        "merchant": "Garage Cardoen",
+        "mcc": 5511,
+        "amount": 8811.47,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Aankoop wagen"
+      },
+      {
+        "tx_id": "TX-SIM00001-1",
+        "timestamp": "2025-11-29T08:28:40.117329119Z",
+        "merchant": "Vlaamse Belastingdienst - BIV",
+        "mcc": 9311,
+        "amount": 833.48,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Belasting op inverkeerstelling"
+      },
+      {
+        "tx_id": "TX-SIM00001-2",
+        "timestamp": "2025-11-30T10:30:12.985835835Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 94.73,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Polis Auto BA + Omnium premie"
+      },
+      {
+        "tx_id": "TX-SIM00001-4",
+        "timestamp": "2025-12-22T07:11:04.468284122Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 60.21,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Echografie 20 weken"
+      },
+      {
+        "tx_id": "TX-SIM00001-5",
+        "timestamp": "2026-01-21T10:43:41.242853415Z",
+        "merchant": "Prenatal Gent",
+        "mcc": 5621,
+        "amount": 169.89,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Zwangerschapskleding"
+      },
+      {
+        "tx_id": "TX-SIM00001-6",
+        "timestamp": "2026-02-25T01:24:54.248746058Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 101.24,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
+      },
+      {
+        "tx_id": "TX-SIM00001-7",
+        "timestamp": "2026-03-07T02:05:05.058969166Z",
         "merchant": "Baby-Dump",
         "mcc": 5641,
-        "amount": 1319.04,
+        "amount": 613.26,
         "currency": "EUR",
         "type": "Bancontact",
         "memo": "Kinderwagen en babykamer"
       },
       {
-        "tx_id": "TX-SIM00002-6",
-        "timestamp": "2025-10-23T11:46:31.180015010Z",
+        "tx_id": "TX-SIM00001-8",
+        "timestamp": "2026-04-11T07:07:02.158179699Z",
+        "merchant": "AZ Sint-Jan Ziekenhuis",
+        "mcc": 8062,
+        "amount": 1164.44,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Ziekenhuisfactuur bevalling"
+      },
+      {
+        "tx_id": "TX-SIM00001-9",
+        "timestamp": "2026-05-01T10:00:46.665116191Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 39.25,
+        "amount": 29.36,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "Levensverzekering premie"
-      },
-      {
-        "tx_id": "TX-SIM00002-0",
-        "timestamp": "2026-12-21T20:00:54.227581965Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 12713.42,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00002-1",
-        "timestamp": "2027-01-03T21:10:01.407544655Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1948.18,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00002-3",
-        "timestamp": "2027-01-04T16:30:28.352618593Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 48.7,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00002-2",
-        "timestamp": "2027-01-04T21:30:17.016375443Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 47.92,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
       }
     ]
   },
@@ -154,158 +174,73 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00003-0",
-        "timestamp": "2025-12-12T04:28:54.911124786Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 6960.18,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00003-1",
-        "timestamp": "2025-12-25T10:52:46.357261388Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1158.7,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00003-3",
-        "timestamp": "2025-12-26T03:29:17.667146415Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 50.14,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00003-2",
-        "timestamp": "2025-12-26T08:23:40.099562262Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 66.8,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00003-4",
-        "timestamp": "2026-09-08T08:21:06.203730019Z",
-        "merchant": "KBC Asset Management",
-        "mcc": 6211,
-        "amount": 13881.47,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Instap beleggingsfonds"
-      }
-    ]
-  },
-  {
-    "client_id": "SIM00004",
-    "timeline": [
-      {
-        "tx_id": "TX-SIM00004-3",
-        "timestamp": "2025-07-05T07:48:45.621504165Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 10812.84,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00004-4",
-        "timestamp": "2025-07-18T05:52:53.914423543Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 800.73,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00004-5",
-        "timestamp": "2025-07-18T23:12:59.155617371Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 60.96,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00004-6",
-        "timestamp": "2025-07-19T02:13:08.678554985Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 44.5,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00004-7",
-        "timestamp": "2025-12-11T13:43:58.687619054Z",
-        "merchant": "AZ Sint-Jan Ziekenhuis",
-        "mcc": 8062,
-        "amount": 1059.84,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Ziekenhuisfactuur bevalling"
-      },
-      {
-        "tx_id": "TX-SIM00004-8",
-        "timestamp": "2025-12-16T15:11:25.752352249Z",
-        "merchant": "Baby-Dump",
-        "mcc": 5641,
-        "amount": 1203.42,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Kinderwagen en babykamer"
-      },
-      {
-        "tx_id": "TX-SIM00004-9",
-        "timestamp": "2025-12-31T13:38:24.396002770Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 41.44,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Levensverzekering premie"
-      },
-      {
-        "tx_id": "TX-SIM00004-0",
-        "timestamp": "2026-03-15T12:41:17.349705080Z",
+        "timestamp": "2025-08-08T11:50:11.437938025Z",
         "merchant": "Garage Cardoen",
         "mcc": 5511,
-        "amount": 27387.68,
+        "amount": 27266.84,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Aankoop wagen"
       },
       {
-        "tx_id": "TX-SIM00004-1",
-        "timestamp": "2026-03-17T11:14:18.107163340Z",
+        "tx_id": "TX-SIM00003-1",
+        "timestamp": "2025-08-10T14:39:39.593486940Z",
         "merchant": "Vlaamse Belastingdienst - BIV",
         "mcc": 9311,
-        "amount": 225.03,
+        "amount": 373.23,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Belasting op inverkeerstelling"
       },
       {
-        "tx_id": "TX-SIM00004-2",
-        "timestamp": "2026-03-18T07:51:11.944394474Z",
+        "tx_id": "TX-SIM00003-2",
+        "timestamp": "2025-08-11T06:21:41.342869941Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 129.98,
+        "amount": 86.73,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "Polis Auto BA + Omnium premie"
+      },
+      {
+        "tx_id": "TX-SIM00003-3",
+        "timestamp": "2025-09-04T12:32:08.093667289Z",
+        "merchant": "Notariskantoor De Smet",
+        "mcc": 8111,
+        "amount": 13318.19,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Provisie aktekosten aankoop woning"
+      },
+      {
+        "tx_id": "TX-SIM00003-4",
+        "timestamp": "2025-09-17T12:08:22.018941350Z",
+        "merchant": "KBC Bank NV",
+        "mcc": 6012,
+        "amount": 1191.89,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Maandelijkse aflossing hypothecair krediet"
+      },
+      {
+        "tx_id": "TX-SIM00003-5",
+        "timestamp": "2025-09-18T09:38:48.066278332Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 26.39,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Woningpolis brand en waterschade"
+      },
+      {
+        "tx_id": "TX-SIM00003-6",
+        "timestamp": "2025-09-18T10:46:13.855085279Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 49.05,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Schuldsaldoverzekering periodieke premie"
       }
     ]
   },
@@ -314,53 +249,38 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00005-0",
-        "timestamp": "2025-05-15T02:23:15.236389625Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 21152.83,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00005-1",
-        "timestamp": "2025-05-28T02:15:49.073495304Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1747.64,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00005-3",
-        "timestamp": "2025-05-29T00:05:40.778931541Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 56.36,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00005-2",
-        "timestamp": "2025-05-29T00:18:29.949272436Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 53.88,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00005-4",
-        "timestamp": "2025-10-25T07:48:59.030000830Z",
+        "timestamp": "2025-05-09T11:39:39.307448799Z",
         "merchant": "KBC Asset Management",
         "mcc": 6211,
-        "amount": 13118.01,
+        "amount": 4701.92,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Instap beleggingsfonds"
+      }
+    ]
+  },
+  {
+    "client_id": "SIM00006",
+    "timeline": [
+      {
+        "tx_id": "TX-SIM00006-0",
+        "timestamp": "2026-08-06T04:09:20.784768201Z",
+        "merchant": "Fietsen De Geus",
+        "mcc": 5940,
+        "amount": 3776.77,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "E-Bike aankoop"
+      },
+      {
+        "tx_id": "TX-SIM00006-1",
+        "timestamp": "2026-08-07T03:23:46.178451356Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 15.33,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "KBC Fietsverzekering Omnium + Diefstal"
       }
     ]
   },
@@ -369,118 +289,23 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00007-0",
-        "timestamp": "2025-12-10T05:27:26.069573186Z",
+        "timestamp": "2026-12-19T05:41:54.549633060Z",
         "merchant": "Fietsen De Geus",
         "mcc": 5940,
-        "amount": 4970.66,
+        "amount": 4682.62,
         "currency": "EUR",
         "type": "Bancontact",
         "memo": "E-Bike aankoop"
       },
       {
         "tx_id": "TX-SIM00007-1",
-        "timestamp": "2025-12-11T01:46:40.678761139Z",
+        "timestamp": "2026-12-20T03:15:52.893978391Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 10.34,
+        "amount": 17.21,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "KBC Fietsverzekering Omnium + Diefstal"
-      }
-    ]
-  },
-  {
-    "client_id": "SIM00008",
-    "timeline": [
-      {
-        "tx_id": "TX-SIM00008-4",
-        "timestamp": "2026-03-27T18:46:44.568584172Z",
-        "merchant": "Garage Cardoen",
-        "mcc": 5511,
-        "amount": 26671.96,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Aankoop wagen"
-      },
-      {
-        "tx_id": "TX-SIM00008-5",
-        "timestamp": "2026-03-29T19:22:34.463609864Z",
-        "merchant": "Vlaamse Belastingdienst - BIV",
-        "mcc": 9311,
-        "amount": 351.11,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Belasting op inverkeerstelling"
-      },
-      {
-        "tx_id": "TX-SIM00008-6",
-        "timestamp": "2026-03-30T14:42:56.936626402Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 106.75,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Polis Auto BA + Omnium premie"
-      },
-      {
-        "tx_id": "TX-SIM00008-7",
-        "timestamp": "2026-05-14T13:32:40.587229130Z",
-        "merchant": "Fietsen De Geus",
-        "mcc": 5940,
-        "amount": 4590.33,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "E-Bike aankoop"
-      },
-      {
-        "tx_id": "TX-SIM00008-8",
-        "timestamp": "2026-05-15T13:48:00.196097491Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 23.24,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "KBC Fietsverzekering Omnium + Diefstal"
-      },
-      {
-        "tx_id": "TX-SIM00008-0",
-        "timestamp": "2026-11-07T02:53:15.542136626Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 23854.68,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00008-1",
-        "timestamp": "2026-11-20T02:32:46.197880807Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1411.08,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00008-3",
-        "timestamp": "2026-11-21T02:03:08.196233756Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 16.12,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00008-2",
-        "timestamp": "2026-11-21T10:16:20.914348754Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 28.87,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
       }
     ]
   },
@@ -488,91 +313,21 @@
     "client_id": "SIM00009",
     "timeline": [
       {
-        "tx_id": "TX-SIM00009-4",
-        "timestamp": "2025-09-20T09:58:46.373269471Z",
-        "merchant": "AZ Sint-Jan Ziekenhuis",
-        "mcc": 8062,
-        "amount": 1822.39,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Ziekenhuisfactuur bevalling"
-      },
-      {
-        "tx_id": "TX-SIM00009-5",
-        "timestamp": "2025-09-25T12:06:05.319955501Z",
-        "merchant": "Baby-Dump",
-        "mcc": 5641,
-        "amount": 487.14,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Kinderwagen en babykamer"
-      },
-      {
-        "tx_id": "TX-SIM00009-6",
-        "timestamp": "2025-10-10T12:21:22.094418484Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 55.0,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Levensverzekering premie"
-      },
-      {
         "tx_id": "TX-SIM00009-0",
-        "timestamp": "2026-04-08T05:37:06.673342582Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 15866.96,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
-      },
-      {
-        "tx_id": "TX-SIM00009-1",
-        "timestamp": "2026-04-21T05:19:04.819441024Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1032.85,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00009-3",
-        "timestamp": "2026-04-22T03:24:30.555443249Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 21.74,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00009-2",
-        "timestamp": "2026-04-22T06:34:41.232132297Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 46.31,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00009-7",
-        "timestamp": "2026-10-21T05:10:56.507101027Z",
+        "timestamp": "2025-04-21T08:16:39.782458650Z",
         "merchant": "Fietsen De Geus",
         "mcc": 5940,
-        "amount": 2552.3,
+        "amount": 4126.11,
         "currency": "EUR",
         "type": "Bancontact",
         "memo": "E-Bike aankoop"
       },
       {
-        "tx_id": "TX-SIM00009-8",
-        "timestamp": "2026-10-22T03:55:10.738491193Z",
+        "tx_id": "TX-SIM00009-1",
+        "timestamp": "2025-04-22T07:56:26.745250708Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 20.73,
+        "amount": 24.06,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "KBC Fietsverzekering Omnium + Diefstal"
@@ -580,27 +335,177 @@
     ]
   },
   {
-    "client_id": "SIM00013",
+    "client_id": "SIM00010",
     "timeline": [
       {
-        "tx_id": "TX-SIM00013-0",
-        "timestamp": "2026-07-01T16:01:59.180211842Z",
-        "merchant": "Fietsen De Geus",
-        "mcc": 5940,
-        "amount": 1037.37,
+        "tx_id": "TX-SIM00010-4",
+        "timestamp": "2025-08-17T09:39:46.584280539Z",
+        "merchant": "KBC Asset Management",
+        "mcc": 6211,
+        "amount": 5297.72,
         "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "E-Bike aankoop"
+        "type": "SEPA Transfer",
+        "memo": "Instap beleggingsfonds"
       },
       {
-        "tx_id": "TX-SIM00013-1",
-        "timestamp": "2026-07-02T21:17:38.418248431Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 24.77,
+        "tx_id": "TX-SIM00010-0",
+        "timestamp": "2026-12-25T14:00:57.594310245Z",
+        "merchant": "Notariskantoor De Smet",
+        "mcc": 8111,
+        "amount": 6392.05,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Provisie aktekosten aankoop woning"
+      },
+      {
+        "tx_id": "TX-SIM00010-1",
+        "timestamp": "2027-01-07T22:42:44.920219997Z",
+        "merchant": "KBC Bank NV",
+        "mcc": 6012,
+        "amount": 2014.99,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "KBC Fietsverzekering Omnium + Diefstal"
+        "memo": "Maandelijkse aflossing hypothecair krediet"
+      },
+      {
+        "tx_id": "TX-SIM00010-3",
+        "timestamp": "2027-01-08T14:58:21.319927216Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 34.16,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Schuldsaldoverzekering periodieke premie"
+      },
+      {
+        "tx_id": "TX-SIM00010-2",
+        "timestamp": "2027-01-08T21:53:41.828765003Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 40.65,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Woningpolis brand en waterschade"
+      }
+    ]
+  },
+  {
+    "client_id": "SIM00011",
+    "timeline": [
+      {
+        "tx_id": "TX-SIM00011-1",
+        "timestamp": "2025-01-13T19:24:12.378398114Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 146.29,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
+      },
+      {
+        "tx_id": "TX-SIM00011-2",
+        "timestamp": "2025-03-14T21:17:09.895996870Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 98.18,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Echografie 20 weken"
+      },
+      {
+        "tx_id": "TX-SIM00011-3",
+        "timestamp": "2025-04-13T16:43:48.324628901Z",
+        "merchant": "Prenatal Gent",
+        "mcc": 5621,
+        "amount": 362.73,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Zwangerschapskleding"
+      },
+      {
+        "tx_id": "TX-SIM00011-4",
+        "timestamp": "2025-05-18T14:45:48.600506287Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 136.46,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
+      },
+      {
+        "tx_id": "TX-SIM00011-5",
+        "timestamp": "2025-05-28T15:57:23.074192054Z",
+        "merchant": "Baby-Dump",
+        "mcc": 5641,
+        "amount": 1401.88,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Kinderwagen en babykamer"
+      },
+      {
+        "tx_id": "TX-SIM00011-6",
+        "timestamp": "2025-07-02T21:28:04.251691623Z",
+        "merchant": "AZ Sint-Jan Ziekenhuis",
+        "mcc": 8062,
+        "amount": 1349.39,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Ziekenhuisfactuur bevalling"
+      },
+      {
+        "tx_id": "TX-SIM00011-7",
+        "timestamp": "2025-07-22T15:19:42.533924852Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 53.01,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Levensverzekering premie"
+      },
+      {
+        "tx_id": "TX-SIM00011-0",
+        "timestamp": "2026-05-17T12:24:28.085246630Z",
+        "merchant": "KBC Asset Management",
+        "mcc": 6211,
+        "amount": 7441.61,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Instap beleggingsfonds"
+      }
+    ]
+  },
+  {
+    "client_id": "SIM00012",
+    "timeline": [
+      {
+        "tx_id": "TX-SIM00012-0",
+        "timestamp": "2026-04-20T14:39:58.776105038Z",
+        "merchant": "Garage Cardoen",
+        "mcc": 5511,
+        "amount": 11661.91,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Aankoop wagen"
+      },
+      {
+        "tx_id": "TX-SIM00012-1",
+        "timestamp": "2026-04-22T16:01:16.908243605Z",
+        "merchant": "Vlaamse Belastingdienst - BIV",
+        "mcc": 9311,
+        "amount": 184.06,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Belasting op inverkeerstelling"
+      },
+      {
+        "tx_id": "TX-SIM00012-2",
+        "timestamp": "2026-04-23T09:41:50.644283678Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 68.74,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Polis Auto BA + Omnium premie"
       }
     ]
   },
@@ -609,68 +514,23 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00014-0",
-        "timestamp": "2025-05-21T10:37:50.899907909Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 17089.17,
+        "timestamp": "2025-04-16T21:21:45.702364042Z",
+        "merchant": "Fietsen De Geus",
+        "mcc": 5940,
+        "amount": 5655.31,
         "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
+        "type": "Bancontact",
+        "memo": "E-Bike aankoop"
       },
       {
         "tx_id": "TX-SIM00014-1",
-        "timestamp": "2025-06-03T10:26:50.957730247Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1517.77,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00014-2",
-        "timestamp": "2025-06-04T05:00:33.300468952Z",
+        "timestamp": "2025-04-17T21:16:22.116104173Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 63.41,
+        "amount": 11.21,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00014-3",
-        "timestamp": "2025-06-04T11:34:44.361584296Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 38.06,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
-      },
-      {
-        "tx_id": "TX-SIM00014-4",
-        "timestamp": "2025-10-08T00:45:21.433331252Z",
-        "merchant": "KBC Asset Management",
-        "mcc": 6211,
-        "amount": 8434.31,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Instap beleggingsfonds"
-      }
-    ]
-  },
-  {
-    "client_id": "SIM00015",
-    "timeline": [
-      {
-        "tx_id": "TX-SIM00015-0",
-        "timestamp": "2026-02-25T07:59:00.616785894Z",
-        "merchant": "KBC Asset Management",
-        "mcc": 6211,
-        "amount": 4976.97,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Instap beleggingsfonds"
+        "memo": "KBC Fietsverzekering Omnium + Diefstal"
       }
     ]
   },
@@ -678,34 +538,84 @@
     "client_id": "SIM00016",
     "timeline": [
       {
-        "tx_id": "TX-SIM00016-0",
-        "timestamp": "2026-03-24T15:08:14.380885593Z",
-        "merchant": "AZ Sint-Jan Ziekenhuis",
-        "mcc": 8062,
-        "amount": 807.48,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Ziekenhuisfactuur bevalling"
-      },
-      {
         "tx_id": "TX-SIM00016-1",
-        "timestamp": "2026-03-29T08:51:31.701413312Z",
-        "merchant": "Baby-Dump",
-        "mcc": 5641,
-        "amount": 1433.6,
+        "timestamp": "2026-02-28T17:31:13.591387917Z",
+        "merchant": "Notariskantoor De Smet",
+        "mcc": 8111,
+        "amount": 8807.07,
         "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Kinderwagen en babykamer"
+        "type": "SEPA Transfer",
+        "memo": "Provisie aktekosten aankoop woning"
       },
       {
         "tx_id": "TX-SIM00016-2",
-        "timestamp": "2026-04-13T08:52:00.666168782Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 26.57,
+        "timestamp": "2026-03-13T21:27:41.531644305Z",
+        "merchant": "KBC Bank NV",
+        "mcc": 6012,
+        "amount": 872.57,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Levensverzekering premie"
+        "memo": "Maandelijkse aflossing hypothecair krediet"
+      },
+      {
+        "tx_id": "TX-SIM00016-4",
+        "timestamp": "2026-03-14T13:43:50.463192993Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 15.92,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Schuldsaldoverzekering periodieke premie"
+      },
+      {
+        "tx_id": "TX-SIM00016-3",
+        "timestamp": "2026-03-14T18:33:41.035737786Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 30.67,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Woningpolis brand en waterschade"
+      },
+      {
+        "tx_id": "TX-SIM00016-0",
+        "timestamp": "2026-05-04T04:28:14.591265572Z",
+        "merchant": "KBC Asset Management",
+        "mcc": 6211,
+        "amount": 17291.31,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Instap beleggingsfonds"
+      },
+      {
+        "tx_id": "TX-SIM00016-5",
+        "timestamp": "2026-06-03T12:04:46.152077246Z",
+        "merchant": "Garage Cardoen",
+        "mcc": 5511,
+        "amount": 19278.6,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Aankoop wagen"
+      },
+      {
+        "tx_id": "TX-SIM00016-6",
+        "timestamp": "2026-06-05T12:42:57.744281406Z",
+        "merchant": "Vlaamse Belastingdienst - BIV",
+        "mcc": 9311,
+        "amount": 141.75,
+        "currency": "EUR",
+        "type": "SEPA Transfer",
+        "memo": "Belasting op inverkeerstelling"
+      },
+      {
+        "tx_id": "TX-SIM00016-7",
+        "timestamp": "2026-06-06T11:05:09.021870943Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 53.04,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Polis Auto BA + Omnium premie"
       }
     ]
   },
@@ -714,43 +624,73 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00017-0",
-        "timestamp": "2025-12-15T08:57:43.777611448Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 10530.31,
+        "timestamp": "2025-04-15T07:14:12.736921657Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 102.85,
         "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
       },
       {
         "tx_id": "TX-SIM00017-1",
-        "timestamp": "2025-12-28T06:17:46.799510095Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1251.63,
+        "timestamp": "2025-06-14T09:27:09.708063231Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 63.97,
         "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
+        "type": "Bancontact",
+        "memo": "Echografie 20 weken"
       },
       {
         "tx_id": "TX-SIM00017-2",
-        "timestamp": "2025-12-29T02:54:34.437701263Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 44.01,
+        "timestamp": "2025-07-14T03:52:43.035585650Z",
+        "merchant": "Prenatal Gent",
+        "mcc": 5621,
+        "amount": 192.43,
         "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
+        "type": "Bancontact",
+        "memo": "Zwangerschapskleding"
       },
       {
         "tx_id": "TX-SIM00017-3",
-        "timestamp": "2025-12-29T05:16:56.683840393Z",
+        "timestamp": "2025-08-18T03:52:42.544413984Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 103.89,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
+      },
+      {
+        "tx_id": "TX-SIM00017-4",
+        "timestamp": "2025-08-28T08:22:58.737905481Z",
+        "merchant": "Baby-Dump",
+        "mcc": 5641,
+        "amount": 845.04,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Kinderwagen en babykamer"
+      },
+      {
+        "tx_id": "TX-SIM00017-5",
+        "timestamp": "2025-10-02T07:55:19.359717234Z",
+        "merchant": "AZ Sint-Jan Ziekenhuis",
+        "mcc": 8062,
+        "amount": 622.22,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Ziekenhuisfactuur bevalling"
+      },
+      {
+        "tx_id": "TX-SIM00017-6",
+        "timestamp": "2025-10-22T06:05:04.059081297Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 38.49,
+        "amount": 31.88,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
+        "memo": "Levensverzekering premie"
       }
     ]
   },
@@ -758,54 +698,74 @@
     "client_id": "SIM00018",
     "timeline": [
       {
-        "tx_id": "TX-SIM00018-3",
-        "timestamp": "2026-10-12T07:48:07.486824177Z",
-        "merchant": "Fietsen De Geus",
-        "mcc": 5940,
-        "amount": 2326.91,
+        "tx_id": "TX-SIM00018-0",
+        "timestamp": "2025-07-11T01:10:10.869360189Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 133.67,
         "currency": "EUR",
         "type": "Bancontact",
-        "memo": "E-Bike aankoop"
-      },
-      {
-        "tx_id": "TX-SIM00018-4",
-        "timestamp": "2026-10-13T01:05:36.192633321Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 10.16,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "KBC Fietsverzekering Omnium + Diefstal"
-      },
-      {
-        "tx_id": "TX-SIM00018-0",
-        "timestamp": "2026-12-18T01:49:03.830240571Z",
-        "merchant": "Garage Cardoen",
-        "mcc": 5511,
-        "amount": 15827.45,
-        "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Aankoop wagen"
+        "memo": "Consultatie gynaecologie"
       },
       {
         "tx_id": "TX-SIM00018-1",
-        "timestamp": "2026-12-19T17:38:52.728994328Z",
-        "merchant": "Vlaamse Belastingdienst - BIV",
-        "mcc": 9311,
-        "amount": 104.39,
+        "timestamp": "2025-09-09T08:37:18.443664825Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 106.48,
         "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Belasting op inverkeerstelling"
+        "type": "Bancontact",
+        "memo": "Echografie 20 weken"
       },
       {
         "tx_id": "TX-SIM00018-2",
-        "timestamp": "2026-12-21T00:48:28.753460534Z",
+        "timestamp": "2025-10-09T05:51:41.002739904Z",
+        "merchant": "Prenatal Gent",
+        "mcc": 5621,
+        "amount": 347.37,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Zwangerschapskleding"
+      },
+      {
+        "tx_id": "TX-SIM00018-3",
+        "timestamp": "2025-11-13T05:08:27.846866902Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 74.35,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
+      },
+      {
+        "tx_id": "TX-SIM00018-4",
+        "timestamp": "2025-11-23T04:01:19.934439598Z",
+        "merchant": "Baby-Dump",
+        "mcc": 5641,
+        "amount": 771.28,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Kinderwagen en babykamer"
+      },
+      {
+        "tx_id": "TX-SIM00018-5",
+        "timestamp": "2025-12-28T07:42:13.701524485Z",
+        "merchant": "AZ Sint-Jan Ziekenhuis",
+        "mcc": 8062,
+        "amount": 693.52,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Ziekenhuisfactuur bevalling"
+      },
+      {
+        "tx_id": "TX-SIM00018-6",
+        "timestamp": "2026-01-17T07:20:27.384168614Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 117.69,
+        "amount": 35.97,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Polis Auto BA + Omnium premie"
+        "memo": "Levensverzekering premie"
       }
     ]
   },
@@ -814,20 +774,20 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00019-0",
-        "timestamp": "2025-11-11T06:25:43.156517252Z",
+        "timestamp": "2025-11-20T00:27:09.388653839Z",
         "merchant": "Fietsen De Geus",
         "mcc": 5940,
-        "amount": 2883.64,
+        "amount": 2146.97,
         "currency": "EUR",
         "type": "Bancontact",
         "memo": "E-Bike aankoop"
       },
       {
         "tx_id": "TX-SIM00019-1",
-        "timestamp": "2025-11-12T06:19:48.473466798Z",
+        "timestamp": "2025-11-21T04:52:45.930649489Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 23.82,
+        "amount": 16.63,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "KBC Fietsverzekering Omnium + Diefstal"
@@ -835,47 +795,57 @@
     ]
   },
   {
-    "client_id": "SIM00020",
+    "client_id": "SIM00022",
     "timeline": [
       {
-        "tx_id": "TX-SIM00020-3",
-        "timestamp": "2025-05-25T14:30:47.170880296Z",
+        "tx_id": "TX-SIM00022-0",
+        "timestamp": "2025-07-13T15:21:14.856611898Z",
         "merchant": "KBC Asset Management",
         "mcc": 6211,
-        "amount": 19797.72,
+        "amount": 7670.68,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Instap beleggingsfonds"
       },
       {
-        "tx_id": "TX-SIM00020-0",
-        "timestamp": "2025-09-19T08:02:06.309886991Z",
-        "merchant": "AZ Sint-Jan Ziekenhuis",
-        "mcc": 8062,
-        "amount": 1698.59,
+        "tx_id": "TX-SIM00022-1",
+        "timestamp": "2025-09-21T01:50:18.763676751Z",
+        "merchant": "Notariskantoor De Smet",
+        "mcc": 8111,
+        "amount": 20795.29,
         "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Ziekenhuisfactuur bevalling"
+        "type": "SEPA Transfer",
+        "memo": "Provisie aktekosten aankoop woning"
       },
       {
-        "tx_id": "TX-SIM00020-1",
-        "timestamp": "2025-09-24T02:44:35.591856834Z",
-        "merchant": "Baby-Dump",
-        "mcc": 5641,
-        "amount": 523.86,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Kinderwagen en babykamer"
-      },
-      {
-        "tx_id": "TX-SIM00020-2",
-        "timestamp": "2025-10-09T04:05:52.150444330Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 51.03,
+        "tx_id": "TX-SIM00022-2",
+        "timestamp": "2025-10-03T22:27:57.211079903Z",
+        "merchant": "KBC Bank NV",
+        "mcc": 6012,
+        "amount": 1616.25,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Levensverzekering premie"
+        "memo": "Maandelijkse aflossing hypothecair krediet"
+      },
+      {
+        "tx_id": "TX-SIM00022-4",
+        "timestamp": "2025-10-04T17:43:09.925020610Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 52.39,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Schuldsaldoverzekering periodieke premie"
+      },
+      {
+        "tx_id": "TX-SIM00022-3",
+        "timestamp": "2025-10-05T02:00:10.960426750Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 29.02,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "Woningpolis brand en waterschade"
       }
     ]
   },
@@ -883,59 +853,99 @@
     "client_id": "SIM00023",
     "timeline": [
       {
-        "tx_id": "TX-SIM00023-0",
-        "timestamp": "2026-12-18T01:47:56.667227165Z",
-        "merchant": "Garage Cardoen",
-        "mcc": 5511,
-        "amount": 8070.59,
+        "tx_id": "TX-SIM00023-7",
+        "timestamp": "2025-06-21T04:00:17.260636051Z",
+        "merchant": "KBC Asset Management",
+        "mcc": 6211,
+        "amount": 9682.86,
         "currency": "EUR",
         "type": "SEPA Transfer",
-        "memo": "Aankoop wagen"
+        "memo": "Instap beleggingsfonds"
+      },
+      {
+        "tx_id": "TX-SIM00023-0",
+        "timestamp": "2025-06-24T16:17:52.774929112Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 130.54,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
       },
       {
         "tx_id": "TX-SIM00023-1",
-        "timestamp": "2026-12-19T23:03:39.689648001Z",
-        "merchant": "Vlaamse Belastingdienst - BIV",
-        "mcc": 9311,
-        "amount": 242.78,
+        "timestamp": "2025-08-23T18:09:22.288773074Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 106.64,
         "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Belasting op inverkeerstelling"
+        "type": "Bancontact",
+        "memo": "Echografie 20 weken"
       },
       {
         "tx_id": "TX-SIM00023-2",
-        "timestamp": "2026-12-20T19:38:12.396423650Z",
+        "timestamp": "2025-09-22T11:59:46.288414324Z",
+        "merchant": "Prenatal Gent",
+        "mcc": 5621,
+        "amount": 290.4,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Zwangerschapskleding"
+      },
+      {
+        "tx_id": "TX-SIM00023-3",
+        "timestamp": "2025-10-27T18:00:04.287588659Z",
+        "merchant": "Dr. Peeters Gynaecoloog",
+        "mcc": 8011,
+        "amount": 71.24,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Consultatie gynaecologie"
+      },
+      {
+        "tx_id": "TX-SIM00023-4",
+        "timestamp": "2025-11-06T19:32:03.803667698Z",
+        "merchant": "Baby-Dump",
+        "mcc": 5641,
+        "amount": 1053.79,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Kinderwagen en babykamer"
+      },
+      {
+        "tx_id": "TX-SIM00023-5",
+        "timestamp": "2025-12-11T14:49:00.121073287Z",
+        "merchant": "AZ Sint-Jan Ziekenhuis",
+        "mcc": 8062,
+        "amount": 2112.71,
+        "currency": "EUR",
+        "type": "Bancontact",
+        "memo": "Ziekenhuisfactuur bevalling"
+      },
+      {
+        "tx_id": "TX-SIM00023-6",
+        "timestamp": "2025-12-31T15:00:32.219096635Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 66.78,
+        "amount": 42.98,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Polis Auto BA + Omnium premie"
+        "memo": "Levensverzekering premie"
       }
     ]
   },
   {
-    "client_id": "SIM00026",
+    "client_id": "SIM00025",
     "timeline": [
       {
-        "tx_id": "TX-SIM00026-0",
-        "timestamp": "2026-04-13T19:46:02.504791191Z",
-        "merchant": "Fietsen De Geus",
-        "mcc": 5940,
-        "amount": 1099.87,
+        "tx_id": "TX-SIM00025-0",
+        "timestamp": "2025-09-25T07:04:23.446441700Z",
+        "merchant": "KBC Asset Management",
+        "mcc": 6211,
+        "amount": 10372.43,
         "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "E-Bike aankoop"
-      },
-      {
-        "tx_id": "TX-SIM00026-1",
-        "timestamp": "2026-04-15T01:40:27.438138781Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 22.83,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "KBC Fietsverzekering Omnium + Diefstal"
+        "type": "SEPA Transfer",
+        "memo": "Instap beleggingsfonds"
       }
     ]
   },
@@ -944,63 +954,33 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00027-0",
-        "timestamp": "2026-01-09T06:38:22.049595806Z",
+        "timestamp": "2026-10-27T08:26:49.416811610Z",
         "merchant": "Garage Cardoen",
         "mcc": 5511,
-        "amount": 30667.21,
+        "amount": 18924.35,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Aankoop wagen"
       },
       {
         "tx_id": "TX-SIM00027-1",
-        "timestamp": "2026-01-11T07:47:10.662517647Z",
+        "timestamp": "2026-10-29T13:22:15.636434271Z",
         "merchant": "Vlaamse Belastingdienst - BIV",
         "mcc": 9311,
-        "amount": 342.12,
+        "amount": 300.77,
         "currency": "EUR",
         "type": "SEPA Transfer",
         "memo": "Belasting op inverkeerstelling"
       },
       {
         "tx_id": "TX-SIM00027-2",
-        "timestamp": "2026-01-12T11:29:32.389077461Z",
+        "timestamp": "2026-10-30T13:56:07.394187606Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 123.7,
+        "amount": 61.03,
         "currency": "EUR",
         "type": "Direct Debit",
         "memo": "Polis Auto BA + Omnium premie"
-      },
-      {
-        "tx_id": "TX-SIM00027-3",
-        "timestamp": "2026-02-04T14:13:20.112497132Z",
-        "merchant": "AZ Sint-Jan Ziekenhuis",
-        "mcc": 8062,
-        "amount": 975.64,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Ziekenhuisfactuur bevalling"
-      },
-      {
-        "tx_id": "TX-SIM00027-4",
-        "timestamp": "2026-02-09T13:38:47.574108017Z",
-        "merchant": "Baby-Dump",
-        "mcc": 5641,
-        "amount": 571.89,
-        "currency": "EUR",
-        "type": "Bancontact",
-        "memo": "Kinderwagen en babykamer"
-      },
-      {
-        "tx_id": "TX-SIM00027-5",
-        "timestamp": "2026-02-24T12:46:53.458807302Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 35.29,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Levensverzekering premie"
       }
     ]
   },
@@ -1009,13 +989,23 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00028-0",
-        "timestamp": "2026-10-21T13:55:08.601239042Z",
-        "merchant": "KBC Asset Management",
-        "mcc": 6211,
-        "amount": 13688.97,
+        "timestamp": "2025-08-27T07:02:07.669606404Z",
+        "merchant": "Fietsen De Geus",
+        "mcc": 5940,
+        "amount": 2203.55,
         "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Instap beleggingsfonds"
+        "type": "Bancontact",
+        "memo": "E-Bike aankoop"
+      },
+      {
+        "tx_id": "TX-SIM00028-1",
+        "timestamp": "2025-08-28T13:09:07.578506730Z",
+        "merchant": "KBC Verzekeringen",
+        "mcc": 6300,
+        "amount": 21.49,
+        "currency": "EUR",
+        "type": "Direct Debit",
+        "memo": "KBC Fietsverzekering Omnium + Diefstal"
       }
     ]
   },
@@ -1024,43 +1014,23 @@
     "timeline": [
       {
         "tx_id": "TX-SIM00029-0",
-        "timestamp": "2025-07-19T00:48:50.409592466Z",
-        "merchant": "Notariskantoor De Smet",
-        "mcc": 8111,
-        "amount": 19920.68,
+        "timestamp": "2025-05-20T08:40:33.789301563Z",
+        "merchant": "Fietsen De Geus",
+        "mcc": 5940,
+        "amount": 3189.29,
         "currency": "EUR",
-        "type": "SEPA Transfer",
-        "memo": "Provisie aktekosten aankoop woning"
+        "type": "Bancontact",
+        "memo": "E-Bike aankoop"
       },
       {
         "tx_id": "TX-SIM00029-1",
-        "timestamp": "2025-07-31T23:50:32.596890580Z",
-        "merchant": "KBC Bank NV",
-        "mcc": 6012,
-        "amount": 1314.28,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Maandelijkse aflossing hypothecair krediet"
-      },
-      {
-        "tx_id": "TX-SIM00029-2",
-        "timestamp": "2025-08-01T17:37:43.662348180Z",
+        "timestamp": "2025-05-21T14:28:10.314385386Z",
         "merchant": "KBC Verzekeringen",
         "mcc": 6300,
-        "amount": 69.1,
+        "amount": 10.42,
         "currency": "EUR",
         "type": "Direct Debit",
-        "memo": "Woningpolis brand en waterschade"
-      },
-      {
-        "tx_id": "TX-SIM00029-3",
-        "timestamp": "2025-08-01T18:36:09.577078341Z",
-        "merchant": "KBC Verzekeringen",
-        "mcc": 6300,
-        "amount": 27.64,
-        "currency": "EUR",
-        "type": "Direct Debit",
-        "memo": "Schuldsaldoverzekering periodieke premie"
+        "memo": "KBC Fietsverzekering Omnium + Diefstal"
       }
     ]
   }

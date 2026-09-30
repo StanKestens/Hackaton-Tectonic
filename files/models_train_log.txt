@@ -1,0 +1,69 @@
+device: mps
+vocab: 22 field names, 165 field values, 21 intents
+
+== SASRec
+  [SASRec] ep  1 train 4.823 | val next-intent R@1 0.285 | 30d needs PR-AUC 0.018 R@3 0.198 (4s)
+  [SASRec] ep  2 train 3.161 | val next-intent R@1 0.317 | 30d needs PR-AUC 0.020 R@3 0.212 (2s)
+  [SASRec] ep  3 train 2.218 | val next-intent R@1 0.315 | 30d needs PR-AUC 0.022 R@3 0.241 (2s)
+  [SASRec] ep  4 train 2.089 | val next-intent R@1 0.314 | 30d needs PR-AUC 0.029 R@3 0.279 (2s)
+  [SASRec] ep  5 train 2.073 | val next-intent R@1 0.316 | 30d needs PR-AUC 0.044 R@3 0.315 (2s)
+  [SASRec] ep  6 train 2.052 | val next-intent R@1 0.315 | 30d needs PR-AUC 0.067 R@3 0.345 (2s)
+  [SASRec] ep  7 train 2.025 | val next-intent R@1 0.321 | 30d needs PR-AUC 0.094 R@3 0.430 (2s)
+  [SASRec] ep  8 train 1.990 | val next-intent R@1 0.321 | 30d needs PR-AUC 0.127 R@3 0.507 (2s)
+  [SASRec] ep  9 train 1.963 | val next-intent R@1 0.322 | 30d needs PR-AUC 0.148 R@3 0.520 (2s)
+  [SASRec] ep 10 train 1.947 | val next-intent R@1 0.320 | 30d needs PR-AUC 0.161 R@3 0.528 (2s)
+  [SASRec] ep 11 train 1.936 | val next-intent R@1 0.316 | 30d needs PR-AUC 0.162 R@3 0.525 (2s)
+  [SASRec] ep 12 train 1.930 | val next-intent R@1 0.323 | 30d needs PR-AUC 0.174 R@3 0.544 (2s)
+  [SASRec] ep 13 train 1.925 | val next-intent R@1 0.323 | 30d needs PR-AUC 0.179 R@3 0.557 (2s)
+  [SASRec] ep 14 train 1.919 | val next-intent R@1 0.317 | 30d needs PR-AUC 0.182 R@3 0.553 (2s)
+  [SASRec] ep 15 train 1.913 | val next-intent R@1 0.316 | 30d needs PR-AUC 0.181 R@3 0.542 (2s)
+  [SASRec] ep 16 train 1.910 | val next-intent R@1 0.323 | 30d needs PR-AUC 0.174 R@3 0.574 (2s)
+  [SASRec] ep 17 train 1.907 | val next-intent R@1 0.314 | 30d needs PR-AUC 0.182 R@3 0.552 (2s)
+  [SASRec] ep 18 train 1.903 | val next-intent R@1 0.322 | 30d needs PR-AUC 0.178 R@3 0.561 (2s)
+  [SASRec] ep 19 train 1.901 | val next-intent R@1 0.319 | 30d needs PR-AUC 0.185 R@3 0.556 (2s)
+  [SASRec] ep 20 train 1.898 | val next-intent R@1 0.320 | 30d needs PR-AUC 0.179 R@3 0.551 (2s)
+  [SASRec] ep 21 train 1.898 | val next-intent R@1 0.317 | 30d needs PR-AUC 0.179 R@3 0.557 (2s)
+  [SASRec] ep 22 train 1.896 | val next-intent R@1 0.318 | 30d needs PR-AUC 0.180 R@3 0.552 (2s)
+  [SASRec] ep 23 train 1.895 | val next-intent R@1 0.318 | 30d needs PR-AUC 0.178 R@3 0.556 (2s)
+  [SASRec] ep 24 train 1.893 | val next-intent R@1 0.319 | 30d needs PR-AUC 0.178 R@3 0.557 (2s)
+  [SASRec] ep 25 train 1.894 | val next-intent R@1 0.318 | 30d needs PR-AUC 0.178 R@3 0.556 (2s)
+
+== TIMeSynC
+  [TIMeSynC] ep  1 train 4.500 | val next-intent R@1 0.302 | 30d needs PR-AUC 0.020 R@3 0.210 (39s)
+  [TIMeSynC] ep  2 train 2.937 | val next-intent R@1 0.322 | 30d needs PR-AUC 0.019 R@3 0.200 (36s)
+  [TIMeSynC] ep  3 train 2.155 | val next-intent R@1 0.316 | 30d needs PR-AUC 0.021 R@3 0.283 (38s)
+  [TIMeSynC] ep  4 train 2.080 | val next-intent R@1 0.318 | 30d needs PR-AUC 0.025 R@3 0.333 (37s)
+  [TIMeSynC] ep  5 train 2.065 | val next-intent R@1 0.322 | 30d needs PR-AUC 0.026 R@3 0.344 (37s)
+  [TIMeSynC] ep  6 train 2.048 | val next-intent R@1 0.316 | 30d needs PR-AUC 0.031 R@3 0.367 (37s)
+  [TIMeSynC] ep  7 train 1.973 | val next-intent R@1 0.326 | 30d needs PR-AUC 0.088 R@3 0.443 (36s)
+  [TIMeSynC] ep  8 train 1.884 | val next-intent R@1 0.331 | 30d needs PR-AUC 0.119 R@3 0.521 (37s)
+  [TIMeSynC] ep  9 train 1.830 | val next-intent R@1 0.336 | 30d needs PR-AUC 0.183 R@3 0.599 (37s)
+  [TIMeSynC] ep 10 train 1.788 | val next-intent R@1 0.341 | 30d needs PR-AUC 0.267 R@3 0.687 (36s)
+  [TIMeSynC] ep 11 train 1.755 | val next-intent R@1 0.343 | 30d needs PR-AUC 0.337 R@3 0.733 (36s)
+  [TIMeSynC] ep 12 train 1.729 | val next-intent R@1 0.355 | 30d needs PR-AUC 0.373 R@3 0.765 (37s)
+  [TIMeSynC] ep 13 train 1.709 | val next-intent R@1 0.354 | 30d needs PR-AUC 0.406 R@3 0.782 (38s)
+  [TIMeSynC] ep 14 train 1.692 | val next-intent R@1 0.355 | 30d needs PR-AUC 0.439 R@3 0.802 (37s)
+  [TIMeSynC] ep 15 train 1.677 | val next-intent R@1 0.352 | 30d needs PR-AUC 0.452 R@3 0.813 (36s)
+  [TIMeSynC] ep 16 train 1.664 | val next-intent R@1 0.365 | 30d needs PR-AUC 0.471 R@3 0.813 (36s)
+  [TIMeSynC] ep 17 train 1.655 | val next-intent R@1 0.362 | 30d needs PR-AUC 0.476 R@3 0.816 (36s)
+  [TIMeSynC] ep 18 train 1.644 | val next-intent R@1 0.360 | 30d needs PR-AUC 0.490 R@3 0.822 (36s)
+  [TIMeSynC] ep 19 train 1.634 | val next-intent R@1 0.362 | 30d needs PR-AUC 0.494 R@3 0.820 (36s)
+  [TIMeSynC] ep 20 train 1.629 | val next-intent R@1 0.359 | 30d needs PR-AUC 0.500 R@3 0.821 (36s)
+  [TIMeSynC] ep 21 train 1.624 | val next-intent R@1 0.364 | 30d needs PR-AUC 0.503 R@3 0.824 (37s)
+  [TIMeSynC] ep 22 train 1.621 | val next-intent R@1 0.361 | 30d needs PR-AUC 0.504 R@3 0.823 (36s)
+  [TIMeSynC] ep 23 train 1.618 | val next-intent R@1 0.363 | 30d needs PR-AUC 0.504 R@3 0.821 (36s)
+  [TIMeSynC] ep 24 train 1.618 | val next-intent R@1 0.362 | 30d needs PR-AUC 0.504 R@3 0.823 (36s)
+  [TIMeSynC] ep 25 train 1.617 | val next-intent R@1 0.362 | 30d needs PR-AUC 0.504 R@3 0.823 (36s)
+
+Test set (last 3 months)
+Next intent: R@k = Recall@k over all intents, life_R@k = life-event intents only
+              R@1    R@5   R@10  life_R@1  life_R@5  life_R@10
+Popularity  0.334  0.900  0.946     0.000     0.000      0.372
+SASRec      0.324  0.914  0.970     0.134     0.257      0.651
+TIMeSynC    0.375  0.959  0.999     0.625     0.740      0.984
+
+Needs in the next 30 days: share of true needs in the top-k, PR-AUC over all scores
+            needs_PR-AUC  needs_R@1  needs_R@3  needs_R@5  n_need_pos
+Popularity         0.024      0.104      0.294      0.459      1520.0
+SASRec             0.148      0.321      0.545      0.692      1520.0
+TIMeSynC           0.510      0.575      0.837      0.926      1520.0

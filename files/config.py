@@ -60,13 +60,18 @@ LIFE_EVENTS = {
         "products": {"bike_insurance": 1},
         "optional": {},
     },
-    "family_expansion": {
-        "searches": ["kinderbijslag", "spaarrekening kind", "levensverzekering"],
-        "spend_shift": {"health": 1.7, "shopping": 1.3},
-        "intents": ["PROTECT_FAMILY", "SAVE_FOR_CHILD"],
+    "family_expansion": {                 # "baby on the way": pregnancy signals months before birth
+        "lead_months": 6,
+        "searches": ["kinderbijslag", "zwangerschapsverlof", "spaarrekening kind", "kinderopvang"],
+        "spend_shift": {"health": 1.8, "shopping": 1.3},
+        "intents": ["PREPARE_FOR_BABY", "PROTECT_FAMILY", "SAVE_FOR_CHILD"],
         "txs": [
+            (-170, "Dr. Peeters Gynaecoloog", 8011, (60, 150), "Bancontact", "Consultatie gynaecologie"),
+            (-110, "Dr. Peeters Gynaecoloog", 8011, (60, 150), "Bancontact", "Echografie 20 weken"),
+            (-80, "Prenatal Gent", 5621, (80, 400), "Bancontact", "Zwangerschapskleding"),
+            (-45, "Dr. Peeters Gynaecoloog", 8011, (60, 150), "Bancontact", "Consultatie gynaecologie"),
+            (-35, "Baby-Dump", 5641, (400, 1800), "Bancontact", "Kinderwagen en babykamer"),
             (0, "AZ Sint-Jan Ziekenhuis", 8062, (300, 2500), "Bancontact", "Ziekenhuisfactuur bevalling"),
-            (5, "Baby-Dump", 5641, (200, 1500), "Bancontact", "Kinderwagen en babykamer"),
             (20, "KBC Verzekeringen", 6300, (15, 60), "Direct Debit", "Levensverzekering premie"),
         ],
         "products": {"life_insurance": 20, "savings_account": 25},
@@ -83,6 +88,22 @@ LIFE_EVENTS = {
         "optional": {},
     },
 }
+
+# ---- balances & investments ----
+# persona -> (savings in months of income, share of customers investing, portfolio in months of income)
+WEALTH = {"student": ((0.2, 2), 0.10, (0.5, 3)), "young_professional": ((1, 6), 0.35, (1, 8)),
+          "family": ((2, 10), 0.40, (2, 12)), "affluent": ((6, 24), 0.90, (12, 60))}
+# investable universe: item, name, asset class, yearly drift, yearly volatility
+INSTRUMENTS = [
+    ("stock:ASML", "ASML Holding", "stocks", 0.12, 0.35), ("stock:KBC", "KBC Group", "stocks", 0.08, 0.25),
+    ("stock:UCB", "UCB", "stocks", 0.10, 0.30), ("stock:ABI", "AB InBev", "stocks", 0.05, 0.25),
+    ("stock:SOLB", "Solvay", "stocks", 0.04, 0.30), ("stock:AAPL", "Apple", "stocks", 0.12, 0.30),
+    ("stock:MSFT", "Microsoft", "stocks", 0.12, 0.28), ("stock:NVDA", "Nvidia", "stocks", 0.20, 0.50),
+    ("etf:IWDA", "iShares MSCI World ETF", "etf", 0.07, 0.15), ("etf:VWCE", "Vanguard FTSE All-World ETF", "etf", 0.07, 0.15),
+    ("fund:KBC_ECO", "KBC Eco Fund", "funds", 0.06, 0.18), ("fund:KBC_TECH", "KBC Equity Fund Technology", "funds", 0.10, 0.28),
+    ("fund:KBC_PENSION", "KBC Pension Savings Fund", "funds", 0.04, 0.10),
+    ("bond:OLO_2034", "Belgian OLO 2034", "bonds", 0.03, 0.05), ("bond:EU_2030", "EU Bond 2030", "bonds", 0.025, 0.04),
+]
 
 # background, non-life-event intents (the "Make a payment" type of intents in the paper)
 ROUTINE_INTENTS = ["MAKE_PAYMENT", "CHECK_BALANCE", "CARD_QUESTION", "UPDATE_DETAILS",
