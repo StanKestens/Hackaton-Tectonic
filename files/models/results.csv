@@ -1,0 +1,9 @@
+product,base_rate,pr_auc_logit,pr_auc_lgbm,prec@5%_logit,prec@5%_lgbm
+savings_account,0.008,0.376,0.302,0.114,0.136
+car_loan,0.022,0.166,0.23,0.203,0.241
+car_insurance,0.05,0.624,0.549,0.629,0.595
+home_loan,0.037,0.325,0.59,0.355,0.524
+home_insurance,0.038,0.37,0.607,0.379,0.524
+life_insurance,0.057,0.551,0.716,0.575,0.708
+bike_insurance,0.038,0.394,0.347,0.383,0.408
+investment_account,0.047,0.479,0.569,0.496,0.546
