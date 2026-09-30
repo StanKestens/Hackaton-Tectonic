@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#00A3E0" />
+  <title>KBC Financial Feed — Demo</title>
+  <style>
+    :root{
+      --kbc-cyan:#00A3E0;
+      --kbc-sky:#20B8E8;
+      --kbc-dark:#003B70;
+      --kbc-deep:#002D55;
+      --kbc-tint:#EAF7FC;
+      --bg:#EFF8FC;
+      --card:#ffffff;
+      --ink:#08243A;
+      --muted:#667985;
+      --line:#DDEBF1;
+      --soft:#EAF5F9;
+      --accent:var(--kbc-dark);
+      --good:#147A4A;
+      --warn:#A55B05;
+      --danger:#B42318;
+      --shadow:0 14px 42px rgba(0,59,112,.10);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{overflow:hidden}
+    button{font:inherit}
+    .app{
+      height:100svh;
+      max-width:540px;
+      margin:0 auto;
+      position:relative;
+      background:linear-gradient(180deg,#F8FCFE 0%,var(--bg) 36%,#E8F5FA 100%);
+      border-left:1px solid rgba(0,59,112,.05);
+      border-right:1px solid rgba(0,59,112,.05);
+    }
+    .topbar{
+      height:68px;
+      position:absolute;
+      inset:0 0 auto 0;
+      z-index:20;
+      padding:env(safe-area-inset-top,0) 18px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:linear-gradient(to bottom,rgba(255,255,255,.98),rgba(255,255,255,.90),rgba(255,255,255,0));
+      pointer-events:none;
+    }
+    .brand,.top-actions{pointer-events:auto}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:760;letter-spacing:-.03em}
+    .kbc-logo{width:62px;height:34px;object-fit:contain;display:block}
+    .kbc-fallback{display:none;color:var(--kbc-dark);font-size:22px;font-weight:900;letter-spacing:-.04em}
+    .brand-sub{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.01em;border-left:1px solid var(--line);padding-left:10px}
+    .feed{
+      height:100svh;
+      overflow-y:auto;
+      scroll-snap-type:y mandatory;
+      scroll-behavior:smooth;
+      overscroll-behavior-y:none;
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .feed::-webkit-scrollbar,.slides::-webkit-scrollbar{display:none}
+    .post{
+      height:100svh;
+      min-height:100svh;
+      scroll-snap-align:start;
+      scroll-snap-stop:always;
+      display:flex;
+      align-items:center;
+      padding:78px 0 96px;
+      position:relative;
+    }
+    .post-shell{width:100%}
+    .post-head{
+      padding:0 20px 12px;
+      display:flex;justify-content:space-between;align-items:center;gap:16px
+    }
+    .identity{display:flex;align-items:center;gap:11px;min-width:0}
+    .avatar{
+      width:39px;height:39px;border-radius:50%;background:var(--kbc-dark);color:#fff;
+      display:grid;place-items:center;font-size:13px;font-weight:800;flex:0 0 auto
+    }
+    .eyebrow{font-size:12px;color:var(--muted);font-weight:650}
+    .post-title{font-size:15px;font-weight:740;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .post-date{font-size:12px;color:var(--muted);white-space:nowrap}
+    .slides{
+      display:flex;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      scroll-behavior:smooth;
+      overscroll-behavior-x:contain;
+      scrollbar-width:none;
+      gap:0;
+    }
+    .slide{
+      min-width:100%;
+      scroll-snap-align:start;
+      padding:0 14px;
+    }
+    .card{
+      min-height:590px;
+      max-height:calc(100svh - 182px);
+      border-radius:var(--radius);
+      background:var(--card);
+      border:1px solid rgba(0,0,0,.045);
+      box-shadow:var(--shadow);
+      padding:26px;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow:hidden;
+    }
+    .card.dark{background:linear-gradient(145deg,var(--kbc-dark),var(--kbc-deep));color:#fff}
+    .card.dark .muted,.card.dark .caption,.card.dark .subtle{color:#a8adb7}
+    .card.dark .mini-card,.card.dark .row,.card.dark .stat{border-color:rgba(255,255,255,.12)}
+    .card.dark .pill{background:rgba(255,255,255,.09);color:#fff}
+    .card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+    .kicker{
+      font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+      font-weight:760;color:var(--muted)
+    }
+    .pill{
+      border-radius:999px;background:var(--soft);padding:7px 10px;font-size:11px;
+      font-weight:740;white-space:nowrap
+    }
+    .metric{font-size:54px;line-height:1;letter-spacing:-.055em;font-weight:790;margin:22px 0 8px}
+    .metric.small{font-size:44px}
+    .metric-label{font-size:16px;color:var(--muted);font-weight:580}
+    .hero-copy{font-size:20px;line-height:1.35;letter-spacing:-.025em;font-weight:670;margin-top:20px;max-width:390px}
+    .spacer{flex:1}
+    .caption{font-size:13px;color:var(--muted);line-height:1.5}
+    .subtle{font-size:12px;color:var(--muted)}
+    .progress{height:10px;border-radius:999px;background:var(--soft);overflow:hidden;margin:14px 0 8px}
+    .bar{height:100%;background:currentColor;border-radius:999px}
+    .good{color:var(--good)}
+    .warn{color:var(--warn)}
+    .danger{color:var(--danger)}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+    .mini-card{border:1px solid var(--line);border-radius:18px;padding:16px}
+    .mini-value{font-size:23px;font-weight:760;letter-spacing:-.035em;margin-top:5px}
+    .list{margin-top:17px;border-top:1px solid var(--line)}
+    .row{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      border-bottom:1px solid var(--line);padding:15px 0
+    }
+    .row-main{display:flex;align-items:center;gap:12px;min-width:0}
+    .row-icon{width:38px;height:38px;border-radius:13px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto}
+    .row-name{font-size:14px;font-weight:690}
+    .row-note{font-size:12px;color:var(--muted);margin-top:2px}
+    .row-value{font-size:14px;font-weight:730;white-space:nowrap}
+    .chart{
+      display:flex;align-items:flex-end;gap:9px;height:180px;margin:24px 0 14px;padding-top:8px
+    }
+    .chart-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;height:100%}
+    .chart-bar{width:100%;border-radius:9px 9px 4px 4px;background:#d9d9d4;min-height:8px}
+    .chart-col.current .chart-bar{background:var(--kbc-cyan)}
+    .card.dark .chart-bar{background:#3a3c42}
+    .card.dark .chart-col.current .chart-bar{background:var(--kbc-sky)}
+    .chart-label{font-size:10px;color:var(--muted)}
+    .big-ring{
+      width:190px;height:190px;border-radius:50%;margin:24px auto 10px;
+      display:grid;place-items:center;background:conic-gradient(currentColor 0 70%,var(--soft) 70% 100%);
+      position:relative
+    }
+    .big-ring::after{content:"";width:142px;height:142px;border-radius:50%;background:var(--card);position:absolute}
+    .ring-content{z-index:1;text-align:center}
+    .ring-content strong{font-size:33px;letter-spacing:-.04em}
+    .ring-content span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+    .insight{
+      border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:18px;
+      font-size:14px;line-height:1.5
+    }
+    .action{
+      border:0;border-radius:15px;background:var(--kbc-cyan);color:#fff;padding:14px 16px;
+      font-weight:730;margin-top:14px;cursor:pointer;text-align:center
+    }
+    .card.dark .action{background:#fff;color:var(--kbc-dark)}
+    .dots{
+      display:flex;justify-content:center;gap:5px;padding:12px 20px 0
+    }
+    .dot{height:3px;flex:1;max-width:62px;border-radius:99px;background:#d6d6d1;transition:.2s}
+    .dot.active{background:var(--kbc-cyan)}
+    .swipe-hint{font-size:11px;color:var(--muted);text-align:center;padding-top:5px}
+    .personal-message{
+      margin:0 20px 12px;
+      border:1px solid rgba(0,163,224,.18);
+      background:linear-gradient(135deg,#F2FBFE,#E6F6FB);
+      border-radius:18px;
+      padding:14px 16px;
+      display:flex;gap:12px;align-items:flex-start;
+    }
+    .personal-message-icon{
+      width:34px;height:34px;border-radius:11px;background:var(--kbc-cyan);color:#fff;
+      display:grid;place-items:center;font-weight:850;flex:0 0 auto;
+    }
+    .personal-message-copy{min-width:0}
+    .personal-message-title{font-size:12px;font-weight:800;color:var(--kbc-dark);margin-bottom:3px}
+    .personal-message-text{font-size:13px;line-height:1.42;color:#355568}
+    .personal-message strong{color:var(--kbc-dark)}
+    .feed-position{
+      position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:12;
+      display:flex;flex-direction:column;gap:6px;pointer-events:none
+    }
+    .feed-tick{width:3px;height:18px;border-radius:99px;background:#d8d8d4;transition:.2s}
+    .feed-tick.active{height:34px;background:var(--kbc-cyan)}
+    .bottom-nav{
+      position:absolute;z-index:25;bottom:max(10px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+      width:calc(100% - 28px);min-height:64px;border:1px solid rgba(0,59,112,.10);border-radius:22px;
+      background:rgba(255,255,255,.95);backdrop-filter:blur(18px);
+      box-shadow:0 10px 35px rgba(0,59,112,.12);
+      display:flex;align-items:center;gap:8px;padding:9px 10px;
+      overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+      scroll-behavior:smooth;scroll-snap-type:x proximity;
+      overscroll-behavior-x:contain;
+    }
+    .bottom-nav::-webkit-scrollbar{display:none}
+    .nav-item{
+      flex:0 0 auto;
+      min-width:max-content;
+      height:44px;
+      border:1px solid transparent;
+      border-radius:15px;
+      background:transparent;
+      display:flex;align-items:center;gap:7px;
+      padding:0 13px;
+      color:#6B7E89;
+      font-size:12px;font-weight:700;
+      cursor:pointer;
+      transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease;
+      white-space:nowrap;scroll-snap-align:center;
+    }
+    .nav-item .nav-icon{font-size:16px;line-height:1}
+    .nav-item.active{
+      color:#fff;
+      background:var(--kbc-dark);
+      border-color:var(--kbc-dark);
+    }
+    .nav-item:active{transform:scale(.97)}
+    .nav-spacer{flex:0 0 2px}
+    .toast{
+      position:absolute;z-index:80;left:50%;bottom:90px;transform:translate(-50%,20px);
+      background:var(--kbc-dark);color:#fff;padding:10px 14px;border-radius:999px;font-size:12px;
+      opacity:0;pointer-events:none;transition:.2s
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media (min-height:780px){.card{min-height:620px}}
+    @media (max-height:700px){
+      .post{padding-top:70px}
+      .card{min-height:500px;padding:22px}
+      .metric{font-size:47px}
+      .hero-copy{font-size:18px}
+      .chart{height:135px}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <img class="kbc-logo" src="https://wcmassets.kbc.be/content/dam/kdl-assets/logos/k/logos-kbc.svg.cdn.res/last-modified/1733244069305/logos-kbc.svg" alt="KBC"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+      <span class="kbc-fallback">KBC</span>
+      <span class="brand-sub">Financial feed</span>
+    </div>
+  </header>
+
+  <main class="feed" id="feed"></main>
+  <div class="feed-position" id="feedPosition" aria-hidden="true"></div>
+
+  <nav class="bottom-nav" id="bottomNav" aria-label="Financial feed sections"></nav>
+
+
+  <div class="toast" id="toast">Updated</div>
+</div>
+
+<script>
+const money = n => new Intl.NumberFormat('en-BE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const pct = n => `${n}%`;
+
+const facts = [
+  {section:'overview',item:'total_balance',label:'Total balance',value:18420,unit:'EUR',rank:1},
+  {section:'overview',item:'monthly_change',label:'This month',value:740,unit:'EUR',rank:2},
+  {section:'savings',item:'savings_balance',label:'Savings balance',value:8240,unit:'EUR',rank:1},
+  {section:'savings',item:'savings_goal',label:'Emergency-fund goal',value:12000,unit:'EUR',rank:2},
+  {section:'cashflow',item:'monthly_income',label:'Income',value:2840,unit:'EUR',period:'2026-09'},
+  {section:'cashflow',item:'monthly_spend',label:'Spent',value:2100,unit:'EUR',period:'2026-09'},
+  {section:'cashflow',item:'free_cashflow',label:'Left after spending',value:740,unit:'EUR',period:'2026-09'},
+  {section:'spending',item:'housing',label:'Housing',value:860,unit:'EUR',category:'housing',rank:1},
+  {section:'spending',item:'food',label:'Food & groceries',value:380,unit:'EUR',category:'food',rank:2},
+  {section:'spending',item:'transport',label:'Transport',value:225,unit:'EUR',category:'transport',rank:3},
+  {section:'spending',item:'leisure',label:'Leisure',value:310,unit:'EUR',category:'leisure',rank:4},
+  {section:'spending',item:'other',label:'Other',value:325,unit:'EUR',category:'other',rank:5},
+  {section:'recurring',item:'subscriptions',label:'Subscriptions',value:89,unit:'EUR',period:'monthly',rank:1},
+  {section:'recurring',item:'fixed_costs',label:'Fixed monthly costs',value:1085,unit:'EUR',period:'monthly',rank:2},
+  {section:'investments',item:'portfolio_value',label:'Investment portfolio',value:4700,unit:'EUR',rank:1},
+  {section:'investments',item:'equities',label:'Equities',value:3055,unit:'EUR',category:'equities',rank:1},
+  {section:'investments',item:'bonds',label:'Bonds',value:1175,unit:'EUR',category:'bonds',rank:2},
+  {section:'investments',item:'cash',label:'Investment cash',value:470,unit:'EUR',category:'cash',rank:3},
+  {section:'upcoming',item:'rent_due',label:'Rent',value:860,unit:'EUR',period:'2026-10-01',rank:1},
+  {section:'upcoming',item:'electricity_due',label:'Electricity',value:74,unit:'EUR',period:'2026-10-05',rank:2},
+  {section:'upcoming',item:'phone_due',label:'Phone',value:28,unit:'EUR',period:'2026-10-09',rank:3},
+  {section:'planning',item:'runway',label:'Savings runway',value:3.9,unit:'months',rank:1},
+  {section:'planning',item:'goal_probability',label:'Goal probability',value:78,unit:'pct',probability:0.78,rank:2}
+];
+
+const posts = [
+  {
+    key:'overview', navLabel:'Balance', navIcon:'€', avatar:'€', eyebrow:'Your money', title:'Total balance', date:'Today',
+    slides:[
+      () => `
+        <div class="card dark">
+          <div class="card-header"><div class="kicker">Total balance</div><div class="pill">+4.2% this month</div></div>
+          <div class="metric">${money(facts.find(x=>x.item==='total_balance').value)}</div>
+          <div class="metric-label">across your connected accounts</div>
+          <div class="spacer"></div>
+          <div class="hero-copy">You added <strong>${money(740)}</strong> to your net cash position this month.</div>
+          <div class="caption" style="margin-top:14px">Swipe left for the account split and recent movement.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Where it sits</div><div class="pill">3 accounts</div></div>
+          <div class="list">
+            ${row('Everyday account','Available cash',5480,'◉')}
+            ${row('Savings','Emergency + goals',8240,'◇')}
+            ${row('Investments','Market value',4700,'↗')}
+          </div>
+          <div class="spacer"></div>
+          <div class="insight"><strong>44.7%</strong> of your liquid balance is currently held in savings.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Balance trend</div><div class="pill">6 months</div></div>
+          ${chart([14200,14800,15350,16120,17680,18420],18420)}
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">Lowest</div><div class="mini-value">${money(14200)}</div></div>
+            <div class="mini-card"><div class="subtle">Change</div><div class="mini-value good">+${money(4220)}</div></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Balances are a snapshot, not a measure of investment performance.</div>
+        </div>`
+    ]
+  },
+  {
+    key:'savings', navLabel:'Savings', navIcon:'◇', avatar:'◇', eyebrow:'Savings', title:'Your safety buffer', date:'Today',
+    slides:[
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Savings balance</div><div class="pill">On track</div></div>
+          <div class="metric">${money(8240)}</div>
+          <div class="metric-label">saved outside your everyday account</div>
+          <div class="progress"><div class="bar good" style="width:68.7%"></div></div>
+          <div class="caption">68.7% of your ${money(12000)} emergency-fund target.</div>
+          <div class="spacer"></div>
+          <div class="hero-copy">At your current pace, the remaining <strong>${money(3760)}</strong> is about 5 months of saving.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Buffer coverage</div><div class="pill">3.9 months</div></div>
+          <div class="big-ring good"><div class="ring-content"><strong>3.9×</strong><span>months covered</span></div></div>
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">Core monthly costs</div><div class="mini-value">${money(2100)}</div></div>
+            <div class="mini-card"><div class="subtle">Target buffer</div><div class="mini-value">5.7 mo</div></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Coverage = savings balance divided by current monthly spending.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">What changes the date?</div><div class="pill">Scenario</div></div>
+          ${scenario('Current monthly saving',740,'~5 months')}
+          ${scenario('Save €100 more / month',840,'~4.5 months')}
+          ${scenario('Save €250 more / month',990,'~3.8 months')}
+          <div class="spacer"></div>
+          <button class="action" onclick="notify('Scenario saved for demo')">Save scenario</button>
+        </div>`
+    ]
+  },
+  {
+    key:'cashflow', navLabel:'Cash flow', navIcon:'↕', avatar:'↕', eyebrow:'Cash flow', title:'This month', date:'September',
+    slides:[
+      () => `
+        <div class="card dark">
+          <div class="card-header"><div class="kicker">Money left this month</div><div class="pill">26% of income</div></div>
+          <div class="metric">${money(740)}</div>
+          <div class="metric-label">income minus recorded spending</div>
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">Income</div><div class="mini-value">${money(2840)}</div></div>
+            <div class="mini-card"><div class="subtle">Spent</div><div class="mini-value">${money(2100)}</div></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="hero-copy">Your current cash flow leaves room to save about <strong>€24/day</strong> this month.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Monthly rhythm</div><div class="pill">Past 6 months</div></div>
+          ${chart([1980,2260,2180,2350,2010,2100],2350)}
+          <div class="insight">September spending is <strong>€250 below</strong> your six-month peak.</div>
+          <div class="spacer"></div>
+          <div class="caption">This view compares recorded outflow only; transfers are excluded in the demo.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Recurring base</div><div class="pill">52% of spend</div></div>
+          <div class="metric small">${money(1085)}</div>
+          <div class="metric-label">estimated fixed monthly costs</div>
+          <div class="list">
+            ${row('Housing','Recurring',860,'⌂')}
+            ${row('Subscriptions','Recurring',89,'◎')}
+            ${row('Other fixed costs','Estimated',136,'•')}
+          </div>
+          <div class="spacer"></div>
+          <div class="insight">Your flexible spending starts after roughly <strong>${money(1085)}</strong> each month.</div>
+        </div>`
+    ]
+  },
+  {
+    key:'spending', navLabel:'Spending', navIcon:'◎', avatar:'◎', eyebrow:'Spending', title:'Where your money went', date:'September',
+    slides:[
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Top categories</div><div class="pill">${money(2100)} total</div></div>
+          <div class="list">
+            ${spendRow('Housing',860,41,'⌂')}
+            ${spendRow('Food & groceries',380,18,'◌')}
+            ${spendRow('Other',325,15,'••')}
+            ${spendRow('Leisure',310,15,'✦')}
+            ${spendRow('Transport',225,11,'→')}
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Swipe for category-level context rather than a separate analytics screen.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Food & groceries</div><div class="pill warn">+€62 vs Aug</div></div>
+          <div class="metric">${money(380)}</div>
+          <div class="metric-label">18% of September spending</div>
+          ${chart([292,305,288,330,318,380],380)}
+          <div class="spacer"></div>
+          <div class="insight">Most of the increase comes from <strong>three larger grocery visits</strong> in the second half of the month.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Notable movement</div><div class="pill">Context</div></div>
+          <div class="hero-copy" style="margin-top:4px">Leisure spending is higher than your recent baseline, while transport is lower.</div>
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">Leisure</div><div class="mini-value warn">+22%</div></div>
+            <div class="mini-card"><div class="subtle">Transport</div><div class="mini-value good">−14%</div></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Comparisons are descriptive: they show movement, not whether a category is “good” or “bad.”</div>
+        </div>`
+    ]
+  },
+  {
+    key:'investments', navLabel:'Investments', navIcon:'↗', avatar:'↗', eyebrow:'Investments', title:'Portfolio snapshot', date:'Today',
+    slides:[
+      () => `
+        <div class="card dark">
+          <div class="card-header"><div class="kicker">Portfolio value</div><div class="pill">25.5% of total balance</div></div>
+          <div class="metric">${money(4700)}</div>
+          <div class="metric-label">current recorded market value</div>
+          <div class="spacer"></div>
+          <div class="hero-copy">Your investments are one part of the same financial feed, not a separate dashboard.</div>
+          <div class="caption" style="margin-top:14px">Swipe for asset allocation and concentration.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Asset allocation</div><div class="pill">3 buckets</div></div>
+          <div class="list">
+            ${row('Equities','65% of portfolio',3055,'↗')}
+            ${row('Bonds','25% of portfolio',1175,'═')}
+            ${row('Cash','10% of portfolio',470,'•')}
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Allocation is shown descriptively; this prototype does not label an allocation as suitable or unsuitable.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Concentration</div><div class="pill">Snapshot</div></div>
+          <div class="big-ring"><div class="ring-content"><strong>65%</strong><span>equities</span></div></div>
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">Largest bucket</div><div class="mini-value">Equities</div></div>
+            <div class="mini-card"><div class="subtle">Portfolio cash</div><div class="mini-value">10%</div></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">The same card pattern can also display product family, sector or asset-class rows from the model.</div>
+        </div>`
+    ]
+  },
+  {
+    key:'upcoming', navLabel:'Upcoming', navIcon:'◷', avatar:'◷', eyebrow:'Upcoming', title:'Next obligations', date:'10 days',
+    slides:[
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Coming up</div><div class="pill">${money(962)} total</div></div>
+          <div class="metric">${money(962)}</div>
+          <div class="metric-label">scheduled or expected in the next 10 days</div>
+          <div class="list">
+            ${datedRow('Rent','1 Oct',860,'⌂')}
+            ${datedRow('Electricity','5 Oct',74,'ϟ')}
+            ${datedRow('Phone','9 Oct',28,'▯')}
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Dates come from period rows, so upcoming obligations can slot into the feed without a new data shape.</div>
+        </div>`,
+      () => `
+        <div class="card dark">
+          <div class="card-header"><div class="kicker">After these payments</div><div class="pill">Illustrative</div></div>
+          <div class="metric">${money(4518)}</div>
+          <div class="metric-label">everyday-account balance after the three listed payments</div>
+          <div class="spacer"></div>
+          <div class="hero-copy">This turns future obligations into a feed story instead of a calendar-heavy finance screen.</div>
+        </div>`
+    ]
+  },
+  {
+    key:'planning', navLabel:'Planning', navIcon:'◫', avatar:'◫', eyebrow:'Planning', title:'Next milestone', date:'Projection',
+    slides:[
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Emergency-fund goal</div><div class="pill">€12,000 target</div></div>
+          <div class="metric">68.7%</div>
+          <div class="metric-label">funded today</div>
+          <div class="progress"><div class="bar good" style="width:68.7%"></div></div>
+          <div class="spacer"></div>
+          <div class="hero-copy">Remaining gap: <strong>${money(3760)}</strong>.</div>
+          <div class="caption" style="margin-top:12px">This card can later be generated from ranked planning facts, goals or life events.</div>
+        </div>`,
+      () => `
+        <div class="card dark">
+          <div class="card-header"><div class="kicker">Projection</div><div class="pill">Illustrative</div></div>
+          <div class="metric">78%</div>
+          <div class="metric-label">modelled probability of reaching the goal in the selected window</div>
+          <div class="spacer"></div>
+          <div class="hero-copy">The model can surface the probability without exposing implementation details in the consumer feed.</div>
+          <div class="caption" style="margin-top:15px">Probability is a model output, not a guarantee.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Suggested next step</div><div class="pill">Optional</div></div>
+          <div class="hero-copy" style="font-size:28px">Move part of this month’s ${money(740)} surplus toward the savings goal.</div>
+          <div class="spacer"></div>
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">If you move €300</div><div class="mini-value">71.2%</div></div>
+            <div class="mini-card"><div class="subtle">If you move €500</div><div class="mini-value">72.8%</div></div>
+          </div>
+          <button class="action" onclick="notify('Demo only — no transfer made')">Explore allocation</button>
+        </div>`
+    ]
+  },
+  {
+    key:'recurring', navLabel:'Recurring', navIcon:'⟳', avatar:'⟳', eyebrow:'Recurring', title:'Money on autopilot', date:'Monthly',
+    slides:[
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Subscriptions</div><div class="pill">${money(89)}/month</div></div>
+          <div class="metric">${money(1068)}</div>
+          <div class="metric-label">annualised at the current monthly rate</div>
+          <div class="list">
+            ${row('Streaming bundle','Monthly',29,'▶')}
+            ${row('Gym','Monthly',35,'●')}
+            ${row('Cloud & apps','Monthly',25,'☁')}
+          </div>
+          <div class="spacer"></div>
+          <div class="caption">Recurring payments become their own feed post instead of being buried in settings.</div>
+        </div>`,
+      () => `
+        <div class="card">
+          <div class="card-header"><div class="kicker">Fixed vs flexible</div><div class="pill">September</div></div>
+          <div class="mini-grid">
+            <div class="mini-card"><div class="subtle">Fixed</div><div class="mini-value">${money(1085)}</div><div class="caption">52%</div></div>
+            <div class="mini-card"><div class="subtle">Flexible</div><div class="mini-value">${money(1015)}</div><div class="caption">48%</div></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="hero-copy">About half of this month’s spending was committed before day-to-day choices.</div>
+        </div>`
+    ]
+  }
+];
+
+function row(name,note,value,icon){
+  return `<div class="row"><div class="row-main"><div class="row-icon">${icon}</div><div><div class="row-name">${name}</div><div class="row-note">${note}</div></div></div><div class="row-value">${money(value)}</div></div>`;
+}
+function datedRow(name,date,value,icon){
+  return `<div class="row"><div class="row-main"><div class="row-icon">${icon}</div><div><div class="row-name">${name}</div><div class="row-note">Due ${date}</div></div></div><div class="row-value">${money(value)}</div></div>`;
+}
+function spendRow(name,value,share,icon){
+  return `<div class="row"><div class="row-main"><div class="row-icon">${icon}</div><div><div class="row-name">${name}</div><div class="row-note">${share}% of spend</div></div></div><div class="row-value">${money(value)}</div></div>`;
+}
+function scenario(label,value,time){
+  return `<div class="row"><div><div class="row-name">${label}</div><div class="row-note">${money(value)}/month</div></div><div class="row-value">${time}</div></div>`;
+}
+function chart(values,max){
+  const labels=['Apr','May','Jun','Jul','Aug','Sep'];
+  return `<div class="chart">${values.map((v,i)=>`<div class="chart-col ${i===values.length-1?'current':''}"><div class="chart-bar" style="height:${Math.max(10,(v/max)*100)}%"></div><div class="chart-label">${labels[i]}</div></div>`).join('')}</div>`;
+}
+
+const feed = document.getElementById('feed');
+const feedPosition=document.getElementById('feedPosition');
+const bottomNav=document.getElementById('bottomNav');
+let loopTimer=null;
+let navLoopTimer=null;
+let wheelLocked=false;
+let previousLogical=0;
+let navCycle=1;
+
+function personalizedMessage(){
+  const total = facts.find(x=>x.item==='total_balance')?.value ?? 0;
+  const saved = facts.find(x=>x.item==='savings_balance')?.value ?? 0;
+  const goal = facts.find(x=>x.item==='savings_goal')?.value ?? 0;
+  const surplus = facts.find(x=>x.item==='free_cashflow')?.value ?? 0;
+  const gap = Math.max(0,goal-saved);
+  const months = surplus > 0 ? Math.ceil(gap/surplus) : null;
+  const monthsCopy = months ? ` At your current monthly surplus, that is about <strong>${months} months</strong>.` : '';
+  return `<div class="personal-message">
+    <div class="personal-message-icon">K</div>
+    <div class="personal-message-copy">
+      <div class="personal-message-title">Your financial update</div>
+      <div class="personal-message-text">You have <strong>${money(total)}</strong> in total balance and you are <strong>${money(gap)}</strong> away from your savings target.${monthsCopy}</div>
+    </div>
+  </div>`;
+}
+
+function postHTML(p,pi,sentinel=''){
+  const sentinelAttr = sentinel ? ` data-sentinel="${sentinel}"` : '';
+  const message = pi===0 && !sentinel ? personalizedMessage() : '';
+  return `
+    <section class="post" data-post="${pi}"${sentinelAttr}>
+      <div class="post-shell">
+        ${message}
+        <div class="post-head">
+          <div class="identity">
+            <div class="avatar">${p.avatar}</div>
+            <div><div class="eyebrow">${p.eyebrow}</div><div class="post-title">${p.title}</div></div>
+          </div>
+          <div class="post-date">${p.date}</div>
+        </div>
+        <div class="slides" data-slides="${pi}-${sentinel || 'real'}">
+          ${p.slides.map((fn,si)=>`<article class="slide" data-slide="${si}">${fn()}</article>`).join('')}
+        </div>
+        <div class="dots">${p.slides.map((_,i)=>`<span class="dot ${i===0?'active':''}"></span>`).join('')}</div>
+        <div class="swipe-hint">${p.slides.length>1?'Swipe sideways for more':''}</div>
+      </div>
+    </section>`;
+}
+
+function bindHorizontalSlides(){
+  document.querySelectorAll('.slides').forEach(slider=>{
+    slider.addEventListener('scroll',()=>{
+      const idx = Math.round(slider.scrollLeft / slider.clientWidth);
+      const dots = slider.parentElement.querySelectorAll('.dot');
+      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    },{passive:true});
+  });
+}
+
+function render(){
+  const last = posts.length - 1;
+  feed.innerHTML = [
+    postHTML(posts[last],last,'head'),
+    ...posts.map((p,pi)=>postHTML(p,pi)),
+    postHTML(posts[0],0,'tail')
+  ].join('');
+  bindHorizontalSlides();
+}
+
+function renderFeedPosition(){
+  feedPosition.innerHTML=posts.map((_,i)=>`<span class="feed-tick ${i===0?'active':''}"></span>`).join('');
+}
+
+function renderBottomNav(){
+  const cycles=[0,1,2];
+  bottomNav.innerHTML=cycles.map(cycle=>
+    posts.map((p,i)=>`
+      <button class="nav-item ${cycle===1 && i===0?'active':''}"
+              data-jump="${i}" data-cycle="${cycle}"
+              aria-label="${p.navLabel}">
+        <span class="nav-icon">${p.navIcon}</span>
+        <span>${p.navLabel}</span>
+      </button>`).join('')
+  ).join('');
+
+  bottomNav.querySelectorAll('[data-jump]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const i=Number(btn.dataset.jump);
+      const post=document.querySelector(`[data-post="${i}"]:not([data-sentinel])`);
+      if(post) feed.scrollTo({top:post.offsetTop,behavior:'smooth'});
+    });
+  });
+}
+
+function navButton(cycle,logical){
+  return bottomNav.querySelector(`[data-cycle="${cycle}"][data-jump="${logical}"]`);
+}
+
+function centerNav(cycle,logical,behavior='smooth'){
+  const active=navButton(cycle,logical);
+  if(!active) return;
+  const left=active.offsetLeft - (bottomNav.clientWidth-active.offsetWidth)/2;
+  bottomNav.scrollTo({left,behavior});
+}
+
+function normalizeNavLoop(){
+  if(navCycle===1) return;
+  navCycle=1;
+  centerNav(1,previousLogical,'auto');
+}
+
+function virtualPage(){
+  return Math.round(feed.scrollTop / Math.max(1,feed.clientHeight));
+}
+
+function logicalIndexFromPage(page){
+  if(page <= 0) return posts.length - 1;
+  if(page >= posts.length + 1) return 0;
+  return page - 1;
+}
+
+function updateFeedPosition(){
+  const logical=logicalIndexFromPage(virtualPage());
+  feedPosition.querySelectorAll('.feed-tick').forEach((x,i)=>x.classList.toggle('active',i===logical));
+
+  // Follow the vertical loop direction so the bottom navigation rotates the same way.
+  if(previousLogical===posts.length-1 && logical===0){
+    navCycle=Math.min(2,navCycle+1);
+  }else if(previousLogical===0 && logical===posts.length-1){
+    navCycle=Math.max(0,navCycle-1);
+  }
+
+  bottomNav.querySelectorAll('.nav-item').forEach(item=>{
+    const isActive=Number(item.dataset.jump)===logical && Number(item.dataset.cycle)===navCycle;
+    item.classList.toggle('active',isActive);
+    if(isActive) item.setAttribute('aria-current','page');
+    else item.removeAttribute('aria-current');
+  });
+
+  centerNav(navCycle,logical,'smooth');
+  previousLogical=logical;
+
+  clearTimeout(navLoopTimer);
+  navLoopTimer=setTimeout(normalizeNavLoop,260);
+}
+
+function settleInfiniteLoop(){
+  const h=feed.clientHeight;
+  const page=virtualPage();
+  if(page===0){
+    feed.style.scrollBehavior='auto';
+    feed.scrollTop=posts.length*h; // same last post, real copy
+    feed.style.scrollBehavior='';
+  }else if(page===posts.length+1){
+    feed.style.scrollBehavior='auto';
+    feed.scrollTop=h; // same first post, real copy
+    feed.style.scrollBehavior='';
+  }
+  updateFeedPosition();
+}
+
+function positionAtFirstPost(){
+  requestAnimationFrame(()=>{
+    feed.style.scrollBehavior='auto';
+    feed.scrollTop=feed.clientHeight;
+    feed.style.scrollBehavior='';
+    updateFeedPosition();
+  });
+}
+
+render();
+renderFeedPosition();
+renderBottomNav();
+requestAnimationFrame(()=>centerNav(1,0,'auto'));
+positionAtFirstPost();
+
+feed.addEventListener('scroll',()=>{
+  updateFeedPosition();
+  clearTimeout(loopTimer);
+  loopTimer=setTimeout(settleInfiniteLoop,110);
+},{passive:true});
+
+if('onscrollend' in window){
+  feed.addEventListener('scrollend',settleInfiniteLoop,{passive:true});
+}
+
+// Desktop/trackpad: advance exactly one vertical post per deliberate wheel gesture.
+// Native touch scrolling still uses CSS mandatory snap.
+feed.addEventListener('wheel',(e)=>{
+  if(Math.abs(e.deltaY) < 12 || Math.abs(e.deltaY) <= Math.abs(e.deltaX)*1.15) return;
+  e.preventDefault();
+  if(wheelLocked) return;
+  wheelLocked=true;
+  const dir=e.deltaY>0?1:-1;
+  const target=Math.max(0,Math.min(posts.length+1,virtualPage()+dir));
+  feed.scrollTo({top:target*feed.clientHeight,behavior:'smooth'});
+  setTimeout(()=>{wheelLocked=false},320);
+},{passive:false});
+
+function notify(message){
+  const t=document.getElementById('toast');
+  t.textContent=message;t.classList.add('show');
+  clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),1700);
+}
+window.notify=notify;
+</script>
+</body>
+</html>
+
