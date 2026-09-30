@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KBC Challenge - Business Pitch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/simple.min.css">
+  <style>
+    /* Clean, spacious design for non-technical audiences on video */
+    .reveal { font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .reveal .slide-background { background-color: #F8F9FA; } 
+    
+    /* Headers - Big and bold */
+    .reveal h1 { color: #002855; font-weight: 800; font-size: 80px; margin-bottom: 20px; }
+    .reveal h2 { color: #00AEEF; font-weight: 700; font-size: 60px; margin-bottom: 50px; text-transform: none; }
+    
+    /* Body Text - Huge and minimal */
+    .reveal p, .reveal li { 
+        font-size: 42px; 
+        line-height: 1.4; 
+        text-align: left; 
+        color: #212529; 
+        margin-bottom: 30px;
+    }
+    
+    .reveal ul { display: block; padding-left: 1.2em; }
+    
+    /* Accents */
+    .highlight-box {
+        background: #EAF4F4;
+        border-left: 12px solid #00AEEF;
+        padding: 40px;
+        border-radius: 8px;
+        margin-top: 40px;
+    }
+    .kbc-blue { color: #00AEEF; font-weight: bold; }
+
+    /* Simple Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 40px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+
+    /* Journey Cards */
+    .journey-card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        text-align: center;
+        border-top: 8px solid #00AEEF;
+    }
+    .journey-title { font-weight: bold; font-size: 36px; color: #002855; margin-bottom: 10px; }
+    .journey-text { font-size: 28px; color: #6C757D; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Title -->
+      <section>
+        <h1>The Predictive Bank</h1>
+        <h2>Anticipating Customer Needs</h2>
+        <div class="highlight-box">
+            <p style="font-size: 48px; font-weight: bold; margin-bottom: 15px; color: #002855;">Our Goal:</p>
+            <p style="font-size: 42px; font-style: italic; margin: 0;">Stop asking "What happened?"<br>Start answering "What do they need next?"</p>
+        </div>
+      </section>
+
+      <!-- Slide 2: The Core Problem -->
+      <section>
+        <h2>The Missing Link</h2>
+        <div class="grid-2">
+            <div>
+                <p>Banks have massive amounts of data, but the customer experience still feels generic.</p>
+                <ul>
+                    <li>Offers are reactive, not proactive.</li>
+                    <li>Timing is often wrong.</li>
+                    <li>Important life events are missed.</li>
+                </ul>
+            </div>
+            <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.08); text-align: center;">
+                <p style="font-size: 80px; margin: 0;">🎯</p>
+                <p style="font-size: 32px; font-weight: bold; color: #00AEEF; margin-top: 20px;">We need to connect daily spending to future life goals.</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: How It Works (Simple Pipeline) -->
+      <section>
+        <h2>How It Works</h2>
+        <p>A simple, 3-step process to transform data into action:</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 60px;">
+            <div class="journey-card" style="width: 25%; border-color: #6C757D;">
+                <div class="journey-title">1. Listen</div>
+                <div class="journey-text">Collect daily actions (spending, saving, browsing).</div>
+            </div>
+            <div style="font-size: 60px; color: #00AEEF;">&#8594;</div>
+            <div class="journey-card" style="width: 25%; border-color: #F59F00;">
+                <div class="journey-title">2. Understand</div>
+                <div class="journey-text">AI spots patterns & upcoming life events.</div>
+            </div>
+            <div style="font-size: 60px; color: #00AEEF;">&#8594;</div>
+            <div class="journey-card" style="width: 25%; border-color: #2B8A3E;">
+                <div class="journey-title">3. Act</div>
+                <div class="journey-text">Deliver the perfect offer at the exact right moment.</div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: The AI Engine -->
+      <section>
+        <h2>The AI Engine</h2>
+        <div class="grid-2">
+            <div>
+                <p>We use an advanced AI model that acts like a timeline reader.</p>
+                <ul>
+                    <li>It doesn't just look at single purchases.</li>
+                    <li>It reads the <span class="kbc-blue">sequence</span> of events over time[cite: 14].</li>
+                    <li>It understands the "story" of a customer's financial life[cite: 14].</li>
+                </ul>
+            </div>
+            <div class="highlight-box" style="margin-top: 0;">
+                <p style="font-size: 36px;"><strong>Example:</strong><br>Buying paint + paying a notary = <br><span class="kbc-blue">Likely renovating a new home.</span></p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Proving It Works -->
+      <section>
+        <h2>Proving It Works</h2>
+        <p>We tested our AI against traditional banking models.</p>
+        <div class="grid-2" style="margin-top: 50px;">
+            <div style="background: #F1F3F5; padding: 40px; border-radius: 12px;">
+                <h3 style="font-size: 40px; color: #495057;">Traditional Models</h3>
+                <p style="font-size: 32px;">Look at basic categories. Miss the big picture. Low accuracy on complex life events.</p>
+            </div>
+            <div style="background: #EAF4F4; padding: 40px; border-radius: 12px; border: 4px solid #00AEEF;">
+                <h3 style="font-size: 40px; color: #002855;">Our Timeline AI</h3>
+                <p style="font-size: 32px;"><strong style="color: #2B8A3E;">2x Better</strong> at predicting exactly what product a customer will need in the next 30 days.</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Built for Scale (Newly Added Content) -->
+      <section>
+        <h2>Built for KBC Scale</h2>
+        <div class="grid-2">
+            <div>
+                <p>We transform complex AI insights into simple labels instantly.</p>
+                <ul>
+                    <li>LLM-generated intent labels are distilled into a lightweight classifier[cite: 21].</li>
+                    <li>This allows it to scale to 10M+ daily sessions at inference without expensive LLM calls[cite: 21].</li>
+                    <li>Zero lag for KBC's 2.3 million customers.</li>
+                </ul>
+            </div>
+            <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.08); text-align: center;">
+                <p style="font-size: 80px; margin: 0;">⚡</p>
+                <p style="font-size: 32px; font-weight: bold; color: #00AEEF; margin-top: 20px;">100,000 timelines processed in under 61 seconds.</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Seamless App Integration -->
+      <section>
+        <h2>Seamless App Integration</h2>
+        <p>We designed this to easily plug into the existing KBC mobile app.</p>
+        <ul>
+            <li>The complex AI runs quietly in the background.</li>
+            <li>It sends fleshed out financial report to the front-end application, which we implemented as a scrollable app</li>
+            <li>No heavy lifting required for the app itself.</li>
+        </ul>
+      </section>
+
+      <!-- Slide 10: Real Life Use Cases -->
+      <section>
+        <h2>Mapping Real Life Journeys</h2>
+        <p>Our solution is trained to recognize massive life shifts:</p>
+        <div class="grid-4">
+            <div class="journey-card">
+                <div class="journey-title">🚗 Mobility</div>
+                <div class="journey-text">Buying a car or e-bike.</div>
+            </div>
+            <div class="journey-card" style="border-color: #2B8A3E;">
+                <div class="journey-title">🏠 Real Estate</div>
+                <div class="journey-text">Buying or renovating a home.</div>
+            </div>
+            <div class="journey-card" style="border-color: #F59F00;">
+                <div class="journey-title">👶 Family</div>
+                <div class="journey-text">Having a baby or adopting a pet.</div>
+            </div>
+            <div class="journey-card" style="border-color: #E63946;">
+                <div class="journey-title">📈 Wealth</div>
+                <div class="journey-text">Building savings or managing cashflow.</div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 11: Next Steps -->
+      <section>
+        <h2>Next Steps to Reality</h2>
+        <div class="highlight-box" style="border-left-color: #2B8A3E;">
+            <ul>
+                <li><span class="kbc-blue">Connect:</span> Plug into KBC's real, live data streams.</li>
+                <li><span class="kbc-blue">Tune:</span> Adjust the AI based on real-world customer feedback.</li>
+                <li><span class="kbc-blue">Scale:</span> Roll out personalized predictions to all 2.3 million customers.</li>
+            </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1920,
+      height: 1080,
+      margin: 0.1,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      slideNumber: true,
+      transition: 'fade',
+      controls: false, // Hidden for clean video recording
+      progress: true
+    });
+  </script>
+</body>
+</html>
