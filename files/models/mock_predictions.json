@@ -1,0 +1,593 @@
+[
+  {
+    "client_id": "BE9101",
+    "ground_truth": "automotive_lifecycle",
+    "predicted_life_event_first_tx": "real_estate_acquisition",
+    "predicted_life_event_final": "automotive_lifecycle",
+    "steps": [
+      {
+        "after_tx": "TX-1001",
+        "merchant": "Garage Cardoen Leuven",
+        "memo": "Aankoop tweedehands Skoda Octavia",
+        "at": "2026-04-10 12:24:00",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.41145116090774536
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.23317155241966248
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.11499850451946259
+          ],
+          [
+            "CARD_QUESTION",
+            0.1002611592411995
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.09681935608386993
+          ]
+        ],
+        "life_events": {
+          "real_estate_acquisition": 0.01091618137434125,
+          "family_expansion": 0.009116270826780237,
+          "automotive_lifecycle": 0.00838001660304144,
+          "wealth_building": 0.0010133562045666622,
+          "micro_mobility_acquisition": 0.00015903506164249848
+        },
+        "reasons": [
+          {
+            "time": "2026-04-10 11:24:00",
+            "token": "transaction.mcc=5511",
+            "product": "NONE",
+            "weight": 0.3911629617214203
+          },
+          {
+            "time": "2026-04-10 11:24:00",
+            "token": "transaction.amount=18500.0",
+            "product": "NONE",
+            "weight": 0.18973378837108612
+          },
+          {
+            "time": "2026-04-10 11:24:00",
+            "token": "transaction.type=SEPA Transfer",
+            "product": "NONE",
+            "weight": 0.16937430202960968
+          }
+        ]
+      },
+      {
+        "after_tx": "TX-1002",
+        "merchant": "Vlaamse Belastingdienst - BIV",
+        "memo": "Belasting op inverkeerstelling",
+        "at": "2026-04-12 10:15:30",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.38775214552879333
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.25288015604019165
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.11629286408424377
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.11553645879030228
+          ],
+          [
+            "CARD_QUESTION",
+            0.11061444878578186
+          ]
+        ],
+        "life_events": {
+          "family_expansion": 0.002513421044568531,
+          "real_estate_acquisition": 0.0016070570927695371,
+          "automotive_lifecycle": 0.0009206568211084232,
+          "wealth_building": 0.0002506604823793168,
+          "micro_mobility_acquisition": 0.00016857171135598037
+        },
+        "reasons": [
+          {
+            "time": "2026-04-12 09:15:30",
+            "token": "transaction.mcc=9311",
+            "product": "NONE",
+            "weight": 0.38267782330513
+          },
+          {
+            "time": "2026-04-12 09:15:30",
+            "token": "transaction.amount=348.5",
+            "product": "NONE",
+            "weight": 0.13459154963493347
+          },
+          {
+            "time": "2026-04-12 09:15:30",
+            "token": "transaction.type=SEPA Transfer",
+            "product": "NONE",
+            "weight": 0.10085201263427734
+          },
+          {
+            "time": "2026-04-10 11:24:00",
+            "token": "transaction.mcc=5511",
+            "product": "NONE",
+            "weight": 0.05665663257241249
+          },
+          {
+            "time": "2026-04-10 11:24:00",
+            "token": "transaction.amount=18500.0",
+            "product": "NONE",
+            "weight": 0.041606780141592026
+          }
+        ]
+      },
+      {
+        "after_tx": "TX-1003",
+        "merchant": "KBC Verzekeringen",
+        "memo": "Polis Auto BA + Full Omnium premie",
+        "at": "2026-04-13 15:02:11",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.38684746623039246
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.2789863646030426
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.1194489598274231
+          ],
+          [
+            "CARD_QUESTION",
+            0.11724189668893814
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.07891689240932465
+          ]
+        ],
+        "life_events": {
+          "automotive_lifecycle": 0.0005281960337981673,
+          "micro_mobility_acquisition": 0.0004240236448822543,
+          "real_estate_acquisition": 0.00022806211927672848,
+          "wealth_building": 0.00019485204637703646,
+          "family_expansion": 0.00010539775030338205
+        },
+        "reasons": [
+          {
+            "time": "2026-04-13 14:02:11",
+            "token": "transaction.mcc=6300",
+            "product": "car_insurance",
+            "weight": 0.22457444667816162
+          },
+          {
+            "time": "2026-04-13 14:02:11",
+            "token": "transaction.amount=84.5",
+            "product": "car_insurance",
+            "weight": 0.15483708679676056
+          },
+          {
+            "time": "2026-04-13 14:02:11",
+            "token": "transaction.type=Direct Debit",
+            "product": "car_insurance",
+            "weight": 0.14496402442455292
+          },
+          {
+            "time": "2026-04-12 09:15:30",
+            "token": "transaction.mcc=9311",
+            "product": "NONE",
+            "weight": 0.08265340328216553
+          },
+          {
+            "time": "2026-04-10 11:24:00",
+            "token": "transaction.type=SEPA Transfer",
+            "product": "NONE",
+            "weight": 0.03367020562291145
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "client_id": "BE4402",
+    "ground_truth": "real_estate_acquisition",
+    "predicted_life_event_first_tx": "real_estate_acquisition",
+    "predicted_life_event_final": "real_estate_acquisition",
+    "steps": [
+      {
+        "after_tx": "TX-2001",
+        "merchant": "Notariskantoor De Smet",
+        "memo": "Provisie aktekosten aankoop woning",
+        "at": "2026-05-02 11:00:00",
+        "top_intents": [
+          [
+            "INSURE_HOME",
+            0.3371359705924988
+          ],
+          [
+            "CHECK_BALANCE",
+            0.19828937947750092
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.17018002271652222
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.13108958303928375
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.06750325858592987
+          ]
+        ],
+        "life_events": {
+          "real_estate_acquisition": 0.3378314641158795,
+          "family_expansion": 0.016042862291214988,
+          "automotive_lifecycle": 0.001764232525601983,
+          "wealth_building": 0.00043530587026907597,
+          "micro_mobility_acquisition": 8.95724544989207e-05
+        },
+        "reasons": [
+          {
+            "time": "2026-05-02 10:00:00",
+            "token": "transaction.mcc=8111",
+            "product": "NONE",
+            "weight": 0.46763426065444946
+          },
+          {
+            "time": "2026-05-02 10:00:00",
+            "token": "transaction.amount=12500.0",
+            "product": "NONE",
+            "weight": 0.1482224017381668
+          },
+          {
+            "time": "2026-05-02 10:00:00",
+            "token": "transaction.type=SEPA Transfer",
+            "product": "NONE",
+            "weight": 0.14080725610256195
+          }
+        ]
+      },
+      {
+        "after_tx": "TX-2002",
+        "merchant": "KBC Bank NV",
+        "memo": "Maandelijkse aflossing hypothecair krediet",
+        "at": "2026-05-15 03:00:00",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.38754862546920776
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.27667364478111267
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.1287253350019455
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.10515853762626648
+          ],
+          [
+            "CARD_QUESTION",
+            0.08693074434995651
+          ]
+        ],
+        "life_events": {
+          "real_estate_acquisition": 0.0016403583849751158,
+          "family_expansion": 0.0012028806377202272,
+          "automotive_lifecycle": 0.0008999138735816814,
+          "micro_mobility_acquisition": 0.00017039589511114173,
+          "wealth_building": 0.00016954670354607515
+        },
+        "reasons": [
+          {
+            "time": "2026-05-15 02:00:00",
+            "token": "transaction.type=Direct Debit",
+            "product": "home_loan",
+            "weight": 0.29639363288879395
+          },
+          {
+            "time": "2026-05-15 02:00:00",
+            "token": "transaction.mcc=6012",
+            "product": "home_loan",
+            "weight": 0.2033298760652542
+          },
+          {
+            "time": "2026-05-15 02:00:00",
+            "token": "transaction.amount=1150.0",
+            "product": "home_loan",
+            "weight": 0.1845863312482834
+          },
+          {
+            "time": "2026-05-02 10:00:00",
+            "token": "transaction.mcc=8111",
+            "product": "NONE",
+            "weight": 0.039613861590623856
+          },
+          {
+            "time": "2026-05-02 10:00:00",
+            "token": "transaction.amount=12500.0",
+            "product": "NONE",
+            "weight": 0.0253086406737566
+          }
+        ]
+      },
+      {
+        "after_tx": "TX-2003",
+        "merchant": "KBC Verzekeringen",
+        "memo": "Woningpolis brand en waterschade",
+        "at": "2026-05-16 09:30:15",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.3960348665714264
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.2695856988430023
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.11186149716377258
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.10937720537185669
+          ],
+          [
+            "CARD_QUESTION",
+            0.08406639844179153
+          ]
+        ],
+        "life_events": {
+          "real_estate_acquisition": 0.01721782795902982,
+          "micro_mobility_acquisition": 0.0005858997690211254,
+          "family_expansion": 0.00044851766142528504,
+          "automotive_lifecycle": 0.00042090883653145283,
+          "wealth_building": 0.00011599669232964516
+        },
+        "reasons": [
+          {
+            "time": "2026-05-16 08:30:15",
+            "token": "transaction.type=Direct Debit",
+            "product": "home_insurance",
+            "weight": 0.0892648696899414
+          },
+          {
+            "time": "2026-05-15 02:00:00",
+            "token": "transaction.type=Direct Debit",
+            "product": "home_loan",
+            "weight": 0.08693750202655792
+          },
+          {
+            "time": "2026-05-16 08:30:16",
+            "token": "transaction.type=Direct Debit",
+            "product": "life_insurance",
+            "weight": 0.08668448030948639
+          },
+          {
+            "time": "2026-05-16 08:30:15",
+            "token": "transaction.mcc=6300",
+            "product": "home_insurance",
+            "weight": 0.08217017352581024
+          },
+          {
+            "time": "2026-05-16 08:30:15",
+            "token": "transaction.amount=42.2",
+            "product": "home_insurance",
+            "weight": 0.07837171852588654
+          }
+        ]
+      },
+      {
+        "after_tx": "TX-2004",
+        "merchant": "KBC Verzekeringen",
+        "memo": "Schuldsaldoverzekering periodieke premie",
+        "at": "2026-05-16 09:30:16",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.3960348665714264
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.2695856988430023
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.111861452460289
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.10937720537185669
+          ],
+          [
+            "CARD_QUESTION",
+            0.08406639844179153
+          ]
+        ],
+        "life_events": {
+          "real_estate_acquisition": 0.017217835502378875,
+          "micro_mobility_acquisition": 0.000585900001851769,
+          "family_expansion": 0.00044851798156742007,
+          "automotive_lifecycle": 0.00042090890201507136,
+          "wealth_building": 0.00011599669232964516
+        },
+        "reasons": [
+          {
+            "time": "2026-05-16 08:30:15",
+            "token": "transaction.type=Direct Debit",
+            "product": "home_insurance",
+            "weight": 0.08926485478878021
+          },
+          {
+            "time": "2026-05-15 02:00:00",
+            "token": "transaction.type=Direct Debit",
+            "product": "home_loan",
+            "weight": 0.08693750947713852
+          },
+          {
+            "time": "2026-05-16 08:30:16",
+            "token": "transaction.type=Direct Debit",
+            "product": "life_insurance",
+            "weight": 0.0866844654083252
+          },
+          {
+            "time": "2026-05-16 08:30:15",
+            "token": "transaction.mcc=6300",
+            "product": "home_insurance",
+            "weight": 0.08217018097639084
+          },
+          {
+            "time": "2026-05-16 08:30:15",
+            "token": "transaction.amount=42.2",
+            "product": "home_insurance",
+            "weight": 0.07837173342704773
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "client_id": "BE5505",
+    "ground_truth": "micro_mobility_acquisition",
+    "predicted_life_event_first_tx": "micro_mobility_acquisition",
+    "predicted_life_event_final": "real_estate_acquisition",
+    "steps": [
+      {
+        "after_tx": "TX-3001",
+        "merchant": "Fietsen De Geus",
+        "memo": "Riese & Müller E-Bike aankoop",
+        "at": "2026-08-01 15:10:00",
+        "top_intents": [
+          [
+            "INSURE_BIKE",
+            0.3700883090496063
+          ],
+          [
+            "BUY_BIKE",
+            0.21698589622974396
+          ],
+          [
+            "CHECK_BALANCE",
+            0.09069237112998962
+          ],
+          [
+            "SAVE_FOR_CHILD",
+            0.07694526016712189
+          ],
+          [
+            "BUY_CAR",
+            0.05570199713110924
+          ]
+        ],
+        "life_events": {
+          "micro_mobility_acquisition": 0.5870742052793503,
+          "family_expansion": 0.08095524273812771,
+          "automotive_lifecycle": 0.05600764606788289,
+          "real_estate_acquisition": 0.00071454970020568,
+          "wealth_building": 0.000636796721664723
+        },
+        "reasons": [
+          {
+            "time": "2026-08-01 14:10:00",
+            "token": "transaction.mcc=5940",
+            "product": "bike_insurance",
+            "weight": 0.40722528100013733
+          },
+          {
+            "time": "2026-08-01 14:10:00",
+            "token": "transaction.amount=3299.0",
+            "product": "bike_insurance",
+            "weight": 0.19500166177749634
+          },
+          {
+            "time": "2026-08-01 14:10:00",
+            "token": "transaction.type=Bancontact",
+            "product": "bike_insurance",
+            "weight": 0.14791440963745117
+          }
+        ]
+      },
+      {
+        "after_tx": "TX-3002",
+        "merchant": "KBC Verzekeringen",
+        "memo": "KBC Fietsverzekering Omnium + Diefstal",
+        "at": "2026-08-02 12:00:10",
+        "top_intents": [
+          [
+            "CHECK_BALANCE",
+            0.43175435066223145
+          ],
+          [
+            "MAKE_PAYMENT",
+            0.28789183497428894
+          ],
+          [
+            "UPDATE_DETAILS",
+            0.10287963598966599
+          ],
+          [
+            "MANAGE_CASHFLOW",
+            0.08813503384590149
+          ],
+          [
+            "CARD_QUESTION",
+            0.0764351338148117
+          ]
+        ],
+        "life_events": {
+          "real_estate_acquisition": 0.0002947190905615571,
+          "automotive_lifecycle": 0.00025660496143586897,
+          "family_expansion": 0.00023120297828427283,
+          "wealth_building": 9.391906041855691e-05,
+          "micro_mobility_acquisition": 5.381179657604207e-05
+        },
+        "reasons": [
+          {
+            "time": "2026-08-02 11:00:10",
+            "token": "transaction.mcc=6300",
+            "product": "bike_insurance",
+            "weight": 0.29875972867012024
+          },
+          {
+            "time": "2026-08-02 11:00:10",
+            "token": "transaction.type=Direct Debit",
+            "product": "bike_insurance",
+            "weight": 0.28766024112701416
+          },
+          {
+            "time": "2026-08-02 11:00:10",
+            "token": "transaction.amount=14.5",
+            "product": "bike_insurance",
+            "weight": 0.09902895987033844
+          },
+          {
+            "time": "2026-08-01 14:10:00",
+            "token": "transaction.mcc=5940",
+            "product": "bike_insurance",
+            "weight": 0.035290736705064774
+          },
+          {
+            "time": "2026-08-01 14:10:00",
+            "token": "transaction.amount=3299.0",
+            "product": "bike_insurance",
+            "weight": 0.014701204374432564
+          }
+        ]
+      }
+    ]
+  }
+]

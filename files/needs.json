@@ -1,0 +1,98 @@
+[
+  {
+    "client_id": "BE9101",
+    "as_of": "2026-04-13 15:02:11",
+    "window_days": 30,
+    "needs": [
+      {
+        "need": "ROADSIDE_ASSISTANCE",
+        "life_event": "automotive_lifecycle",
+        "probability": 0.3029
+      },
+      {
+        "need": "SAVE_FOR_CHILD",
+        "life_event": "family_expansion",
+        "probability": 0.0428
+      },
+      {
+        "need": "PROTECT_FAMILY",
+        "life_event": "family_expansion",
+        "probability": 0.0347
+      },
+      {
+        "need": "INVEST",
+        "life_event": "wealth_building",
+        "probability": 0.0217
+      },
+      {
+        "need": "BUY_BIKE",
+        "life_event": "micro_mobility_acquisition",
+        "probability": 0.0177
+      }
+    ]
+  },
+  {
+    "client_id": "BE4402",
+    "as_of": "2026-05-16 09:30:16",
+    "window_days": 30,
+    "needs": [
+      {
+        "need": "RENOVATION_LOAN",
+        "life_event": "real_estate_acquisition",
+        "probability": 0.3368
+      },
+      {
+        "need": "SAVE_FOR_CHILD",
+        "life_event": "family_expansion",
+        "probability": 0.1825
+      },
+      {
+        "need": "BUY_BIKE",
+        "life_event": "micro_mobility_acquisition",
+        "probability": 0.0444
+      },
+      {
+        "need": "PROTECT_FAMILY",
+        "life_event": "family_expansion",
+        "probability": 0.0276
+      },
+      {
+        "need": "INSURE_BIKE",
+        "life_event": "micro_mobility_acquisition",
+        "probability": 0.0238
+      }
+    ]
+  },
+  {
+    "client_id": "BE5505",
+    "as_of": "2026-08-02 12:00:10",
+    "window_days": 30,
+    "needs": [
+      {
+        "need": "BUY_HOME",
+        "life_event": "real_estate_acquisition",
+        "probability": 0.0086
+      },
+      {
+        "need": "PREPARE_FOR_BABY",
+        "life_event": "family_expansion",
+        "probability": 0.0074
+      },
+      {
+        "need": "BUY_CAR",
+        "life_event": "automotive_lifecycle",
+        "probability": 0.0039
+      },
+      {
+        "need": "INSURE_HOME",
+        "life_event": "real_estate_acquisition",
+        "probability": 0.0038
+      },
+      {
+        "need": "INSURE_CAR",
+        "life_event": "automotive_lifecycle",
+        "probability": 0.0019
+      }
+    ]
+  }
+]
