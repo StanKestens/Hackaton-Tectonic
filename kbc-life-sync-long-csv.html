@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KBC Life-Sync — Long-format CSV PoC</title>
+<style>
+:root{
+  --cyan:#00a4e4; --blue:#0076be; --navy:#12345b; --bg:#f3f7fb; --ink:#132b45;
+  --muted:#6d7f91; --line:#dce7f0; --soft:#e9f7fd; --white:#fff;
+  --warning:#fff4dc; --danger:#fbe8ea; --good:#e9f6ef; --shadow:0 16px 42px rgba(19,43,69,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:
+radial-gradient(circle at 10% 0%,rgba(0,164,228,.13),transparent 26%),
+radial-gradient(circle at 92% 2%,rgba(18,52,91,.08),transparent 25%),var(--bg)}
+button,select,input{font:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:335px minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;padding:24px 21px;background:rgba(255,255,255,.92);border-right:1px solid var(--line);backdrop-filter:blur(15px)}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:25px}
+.brand img{width:82px;height:58px;object-fit:contain;background:white;border-radius:10px}
+.brand h1{font-size:17px;margin:0}.brand p{font-size:11px;color:var(--muted);margin:4px 0 0}
+.section{margin:23px 0}.section-title{font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:750}.field small{font-size:10px;color:var(--muted);line-height:1.4}
+select,.upload{width:100%;padding:10px 11px;border-radius:12px;border:1px solid var(--line);background:white;color:var(--ink)}
+.upload{display:block;text-align:center;font-size:12px;font-weight:800;cursor:pointer}input[type=file]{display:none}
+.note{font-size:11px;color:var(--muted);line-height:1.5;padding:13px;border:1px solid var(--line);border-radius:14px;background:#fbfdff}.note b{color:var(--ink)}
+.toggle{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:12px;font-weight:700}
+.switch{position:relative;width:42px;height:24px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#cbd8e2;border-radius:999px;transition:.18s}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:white;transition:.18s;box-shadow:0 2px 6px rgba(0,0,0,.15)}.switch input:checked+.slider{background:var(--cyan)}.switch input:checked+.slider:before{transform:translateX(18px)}
+.status{font-size:10px;color:#006b9f;min-height:15px;margin-top:7px}
+.main{padding:30px;min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:20px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:850;color:var(--blue)}.topbar h2{font-size:30px;letter-spacing:-.035em;margin:5px 0 4px}.topbar p{font-size:13px;color:var(--muted);margin:0}
+.badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.badge{background:white;border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800}.badge.blue{background:var(--soft);border-color:#c6e9f8;color:#005e93}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
+.phone{background:#e9f0f6;border:1px solid #d4e1eb;border-radius:33px;padding:13px;box-shadow:var(--shadow)}
+.screen{background:#f8fbfd;border:1px solid #dfe9f1;border-radius:25px;min-height:780px;overflow:hidden}
+.mobile-head{background:linear-gradient(135deg,var(--cyan),var(--blue) 55%,var(--navy));color:white;padding:18px 20px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mobile-brand{display:flex;align-items:center;gap:12px}.mobile-brand img{width:58px;height:42px;object-fit:contain;background:white;border-radius:8px;padding:2px}.mobile-head .mini{font-size:10px;opacity:.82}.mobile-head h3{font-size:22px;margin:3px 0 0}.mobile-head .sub{font-size:11px;opacity:.84;margin-top:3px}.avatar{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);font-weight:850}
+.dashboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:16px;align-items:start}
+.card{position:relative;background:white;border:1px solid #e1ebf3;border-radius:19px;padding:17px;box-shadow:0 8px 23px rgba(19,43,69,.045);min-width:0}.card.hero,.card.full{grid-column:1/-1}.card.hero{padding:20px;border-color:#bfe5f5;background:linear-gradient(145deg,#fff,#effaff)}.card.alert{border-left:5px solid #e0a524;background:var(--warning)}.card.danger{border-left:5px solid #c95b63;background:var(--danger)}.card.message{border-left:5px solid var(--cyan)}
+.card h4{font-size:12px;color:var(--muted);margin:0 0 6px}.card-title{font-size:16px;font-weight:850;margin-bottom:5px}.big{font-size:34px;font-weight:850;letter-spacing:-.04em}.subtle{font-size:11px;color:var(--muted);line-height:1.45;margin-top:4px}.metric-row{display:flex;justify-content:space-between;gap:12px;align-items:end}.delta{font-size:12px;color:#0072ad;font-weight:800}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:10px;border:1px solid var(--line);border-radius:13px;background:#fbfdff;font-size:10px;color:var(--muted)}.stat b{display:block;color:var(--ink);font-size:15px;margin-top:3px}
+.list{display:grid;gap:9px;margin-top:9px}.row{display:flex;justify-content:space-between;gap:14px;font-size:12px}.row span:last-child{font-weight:800;text-align:right}
+.progress{height:8px;background:#e5eef5;border-radius:999px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.chart{height:125px;display:flex;align-items:end;gap:5px;margin-top:10px}.bar{flex:1;min-width:6px;background:linear-gradient(180deg,var(--blue),#8ad6f2);border-radius:5px 5px 2px 2px}.legend{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:5px}
+.pill{font-size:9px;text-transform:uppercase;letter-spacing:.08em;border-radius:999px;padding:5px 7px;background:#dff4fc;color:#00689f;font-weight:850}.message-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.kate{display:flex;align-items:center;gap:8px;font-weight:850}.kate-icon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:white;font-size:12px}
+.card p{font-size:13px;line-height:1.5}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.btn{border:0;background:var(--navy);color:white;border-radius:11px;padding:8px 10px;font-weight:800;font-size:11px}.btn.secondary{background:white;color:var(--ink);border:1px solid var(--line)}
+.score-badge{position:absolute;top:10px;right:10px;background:var(--navy);color:white;font-size:9px;font-weight:850;border-radius:999px;padding:4px 7px}.explain{font-size:10px;color:#006caa;font-weight:700;margin-top:8px}
+.engine{position:sticky;top:22px;background:white;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}.engine h3{font-size:15px;margin:0 0 4px}.engine>p{font-size:11px;color:var(--muted);line-height:1.45;margin:0 0 14px}.engine-block{padding:11px;border:1px solid var(--line);border-radius:13px;background:#fbfdff;margin-bottom:9px}.engine-block small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}.engine-block b{font-size:12px}
+.priority-list{display:grid;gap:9px}.priority-row{display:grid;grid-template-columns:1fr 36px;gap:8px;align-items:center}.priority-name{font-size:11px;font-weight:750}.track{height:6px;background:#e6eef4;border-radius:999px;overflow:hidden;margin-top:4px}.track span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan))}.score{text-align:right;font-size:11px;font-weight:850}.formula{margin-top:14px;padding:12px;border:1px solid #d8eaf4;border-radius:14px;background:#f2f8fc;font-size:10px;color:#4d657d;line-height:1.5}.formula b{color:var(--ink)}
+@media(max-width:1120px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.workspace{grid-template-columns:1fr}.engine{position:relative;top:auto;order:-1}}
+@media(max-width:700px){.main{padding:16px}.topbar{display:block}.badges{justify-content:flex-start;margin-top:12px}.dashboard{grid-template-columns:1fr}.card,.card.hero,.card.full{grid-column:1}.three{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <img src="https://wcmassets.kbc.be/content/dam/common-images/logos/internal/brand/kbc/KBC_RGB.svg/_jcr_content/renditions/cq5dam.web.680.9999.jpeg.cdn.res/last-modified/1729069247353/cq5dam.web.680.9999.jpeg" alt="KBC logo">
+    <div><h1>Life-Sync</h1><p>Long-format CSV dashboard PoC</p></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. Customer report</div>
+    <div class="field">
+      <label>Demo report</label>
+      <select id="sample">
+        <option value="sophie">Sophie — moved house</option>
+        <option value="thomas">Thomas — investor</option>
+        <option value="emma">Emma — cash-flow focus</option>
+      </select>
+    </div>
+    <label class="upload" for="file">Upload long-format CSV</label>
+    <input id="file" type="file" accept=".csv,text/csv">
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Experience controls</div>
+    <div class="field">
+      <label>Information density</label>
+      <select id="density">
+        <option value="-1">Simpler</option>
+        <option value="0" selected>Model recommendation</option>
+        <option value="1">More detail</option>
+      </select>
+      <small>The profile sets a default; this preference modifies it.</small>
+    </div>
+    <div class="toggle"><span>Show ranking rationale</span><label class="switch"><input id="showWhy" type="checkbox" checked><span class="slider"></span></label></div>
+    <div class="toggle"><span>Ignore personalization rows</span><label class="switch"><input id="fallback" type="checkbox"><span class="slider"></span></label></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contract</div>
+    <div class="note">
+      The frontend only knows <b>section</b>, <b>item</b>, <b>rank</b>, <b>probability</b>, <b>reason</b> and <b>ui_hint</b>.
+      New facts are new rows, never new columns.
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div><div class="eyebrow">Fully personalized banking interface</div><h2 id="title">Sophie’s dashboard</h2><p id="subtitle">The most relevant modules are assembled from one long-format financial report.</p></div>
+    <div class="badges"><span class="badge blue" id="profileBadge">Planner</span><span class="badge" id="complexityBadge">Complexity 3 / 5</span><span class="badge" id="countBadge">6 modules</span></div>
+  </div>
+
+  <div class="workspace">
+    <section class="phone">
+      <div class="screen">
+        <div class="mobile-head">
+          <div class="mobile-brand">
+            <img src="https://wcmassets.kbc.be/content/dam/common-images/logos/internal/brand/kbc/KBC_RGB.svg/_jcr_content/renditions/cq5dam.web.680.9999.jpeg.cdn.res/last-modified/1729069247353/cq5dam.web.680.9999.jpeg" alt="KBC">
+            <div><div class="mini">KBC Mobile · personalized for you</div><h3 id="hello">Good evening</h3><div class="sub" id="headline">Your most relevant information comes first.</div></div>
+          </div>
+          <div class="avatar" id="avatar">C</div>
+        </div>
+        <div class="dashboard" id="dashboard"></div>
+      </div>
+    </section>
+
+    <aside class="engine">
+      <h3>Importance engine</h3>
+      <p>Uses explicit personalization rows when available. Otherwise it derives priority from ranked needs, life events, alerts and recommendations.</p>
+      <div class="engine-block"><small>Top priority</small><b id="topPriority">—</b></div>
+      <div class="engine-block"><small>Layout source</small><b id="layoutSource">—</b></div>
+      <div class="engine-block"><small>Active signals</small><b id="activeSignals">—</b></div>
+      <div class="section-title">Module priority</div>
+      <div class="priority-list" id="priorityList"></div>
+      <div class="formula">
+        <b>Ordering rule</b><br>
+        Explicit <code>personalization.rank</code> wins. If absent, priority is synthesized from:
+        alerts → life events → next needs → recommendations → profile relevance.<br><br>
+        <code>ui_hint</code> controls hero/card/chart/list/alert presentation.
+      </div>
+    </aside>
+  </div>
+</main>
+</div>
+
+<script>
+const COLUMNS=["client_id","as_of","section","item","label","value","unit","period","category","rank","probability","reason","ui_hint"];
+
+const SAMPLE_CSV = {
+sophie:`client_id,as_of,section,item,label,value,unit,period,category,rank,probability,reason,ui_hint
+C1001,2026-09-30,profile,first_name,First name,Sophie,text,,,,,,hidden
+C1001,2026-09-30,profile,financial_profile,Financial profile,planner,text,,,,,,badge
+C1001,2026-09-30,profile,ui_complexity,UI complexity,3,count,,,,,,hidden
+C1001,2026-09-30,income,net_income,Net income,4200,EUR,2026-09,,,,,,hidden
+C1001,2026-09-30,balances,current_account,Current account,3640,EUR,,,,,,card
+C1001,2026-09-30,balances,savings,Savings,38600,EUR,,,,,,card
+C1001,2026-09-30,balances,investments,Investments,31500,EUR,,,,,,card
+C1001,2026-09-30,balances,debt,Debt,218000,EUR,,,,,,card
+C1001,2026-09-30,balances,net_worth,Net worth,-143860,EUR,,,,,,card
+C1001,2026-09-30,cashflow,monthly_surplus,Monthly surplus,1260,EUR,,,,,,card
+C1001,2026-09-30,cashflow,emergency_buffer,Emergency buffer,3.8,months,,,,,,card
+C1001,2026-09-30,monthly_expenses,housing,Housing,1500,EUR,2026-04,housing,,,,chart
+C1001,2026-09-30,monthly_expenses,housing,Housing,1510,EUR,2026-05,housing,,,,chart
+C1001,2026-09-30,monthly_expenses,housing,Housing,1510,EUR,2026-06,housing,,,,chart
+C1001,2026-09-30,monthly_expenses,housing,Housing,1510,EUR,2026-07,housing,,,,chart
+C1001,2026-09-30,monthly_expenses,housing,Housing,1560,EUR,2026-08,housing,,,,chart
+C1001,2026-09-30,monthly_expenses,housing,Housing,1580,EUR,2026-09,housing,,,,chart
+C1001,2026-09-30,monthly_expenses,groceries,Groceries,510,EUR,2026-04,groceries,,,,chart
+C1001,2026-09-30,monthly_expenses,groceries,545,EUR,2026-05,groceries,,,,chart
+C1001,2026-09-30,monthly_expenses,groceries,520,EUR,2026-06,groceries,,,,chart
+C1001,2026-09-30,monthly_expenses,groceries,550,EUR,2026-07,groceries,,,,chart
+C1001,2026-09-30,monthly_expenses,groceries,560,EUR,2026-08,groceries,,,,chart
+C1001,2026-09-30,monthly_expenses,groceries,570,EUR,2026-09,groceries,,,,chart
+C1001,2026-09-30,investments,equity,Equity,61,pct,,equity,,,,chart
+C1001,2026-09-30,investments,bonds,Bonds,23,pct,,bonds,,,,chart
+C1001,2026-09-30,investments,cash,Cash,16,pct,,cash,,,,chart
+C1001,2026-09-30,products_held,home_insurance,Home insurance,true,bool,,insurance,,,,hidden
+C1001,2026-09-30,life_events,moved_house,Moved house,true,bool,,housing,1,0.96,Recent address change and housing-related transaction pattern,alert
+C1001,2026-09-30,next_needs_30d,insurance_address,Update home insurance address,true,bool,,insurance,1,0.94,Home insurance may still contain the previous address,alert
+C1001,2026-09-30,recommendations,address_review,Review insured address,Review your home insurance address,text,,insurance,1,0.94,Triggered by a high-confidence move event,card
+C1001,2026-09-30,alerts,insurance_address_mismatch,Insurance address needs review,true,bool,,insurance,1,0.98,Address changed recently while home insurance is active,alert
+C1001,2026-09-30,personalization,module_move_message,Move reminder,life_event_message,text,,home,1,,Recent move creates a time-sensitive insurance action,hero
+C1001,2026-09-30,personalization,module_financial_overview,Financial overview,financial_overview,text,,overview,2,,Planner profile benefits from a cross-product overview,card
+C1001,2026-09-30,personalization,module_cashflow,Cash flow,cashflow,text,,cashflow,3,,Cash flow remains relevant but is currently healthy,card
+C1001,2026-09-30,personalization,module_spending,Spending trend,spending_chart,text,,spending,4,,Recent housing costs have changed after the move,chart
+C1001,2026-09-30,personalization,module_goal,Renovation goal,goal_progress,text,,goal,5,,Active home renovation goal is relevant to current life context,card
+C1001,2026-09-30,personalization,module_investments,Investments,investment_overview,text,,investment,6,,Investments remain useful but are not the immediate priority,card`,
+thomas:`client_id,as_of,section,item,label,value,unit,period,category,rank,probability,reason,ui_hint
+C2002,2026-09-30,profile,first_name,First name,Thomas,text,,,,,,hidden
+C2002,2026-09-30,profile,financial_profile,Financial profile,investor,text,,,,,,badge
+C2002,2026-09-30,profile,ui_complexity,UI complexity,5,count,,,,,,hidden
+C2002,2026-09-30,income,net_income,Net income,6900,EUR,2026-09,,,,,,hidden
+C2002,2026-09-30,balances,current_account,Current account,18750,EUR,,,,,,card
+C2002,2026-09-30,balances,savings,Savings,48200,EUR,,,,,,card
+C2002,2026-09-30,balances,investments,Investments,112500,EUR,,,,,,card
+C2002,2026-09-30,balances,debt,Debt,148000,EUR,,,,,,card
+C2002,2026-09-30,balances,net_worth,Net worth,32700,EUR,,,,,,card
+C2002,2026-09-30,cashflow,monthly_surplus,Monthly surplus,3420,EUR,,,,,,card
+C2002,2026-09-30,cashflow,emergency_buffer,7.5,months,,,,,,card
+C2002,2026-09-30,investments,equity,Equity,61,pct,,equity,,,,chart
+C2002,2026-09-30,investments,bonds,Bonds,23,pct,,bonds,,,,chart
+C2002,2026-09-30,investments,cash,Cash,16,pct,,cash,,,,chart
+C2002,2026-09-30,alerts,idle_cash,Idle cash,14200,EUR,,cash,1,,Cash has remained above the target liquidity buffer,alert
+C2002,2026-09-30,recommendations,allocation_review,Review allocation,Explore allocation options,text,,investment,1,0.82,Large amount of cash has remained idle for over six months,card
+C2002,2026-09-30,personalization,module_portfolio,Portfolio performance,investment_overview,text,,investment,1,,Investor profile makes portfolio health the primary dashboard task,hero
+C2002,2026-09-30,personalization,module_allocation,Asset allocation,asset_allocation,text,,investment,2,,Allocation helps explain portfolio risk and diversification,chart
+C2002,2026-09-30,personalization,module_idle_cash,Idle cash opportunity,recommendation,text,,investment,3,,Cash above the normal buffer creates an actionable opportunity,alert
+C2002,2026-09-30,personalization,module_financial_overview,Financial overview,financial_overview,text,,overview,4,,Useful secondary context for total wealth,card
+C2002,2026-09-30,personalization,module_cashflow,Cash flow,cashflow,text,,cashflow,5,,Healthy cash flow is useful but not the dominant need,card`,
+emma:`client_id,as_of,section,item,label,value,unit,period,category,rank,probability,reason,ui_hint
+C3003,2026-09-30,profile,first_name,First name,Emma,text,,,,,,hidden
+C3003,2026-09-30,profile,financial_profile,Financial profile,stabilizer,text,,,,,,badge
+C3003,2026-09-30,profile,ui_complexity,UI complexity,1,count,,,,,,hidden
+C3003,2026-09-30,income,net_income,Net income,2100,EUR,2026-09,,,,,,hidden
+C3003,2026-09-30,balances,current_account,Current account,482,EUR,,,,,,card
+C3003,2026-09-30,balances,savings,Savings,950,EUR,,,,,,card
+C3003,2026-09-30,balances,investments,Investments,0,EUR,,,,,,card
+C3003,2026-09-30,balances,debt,Debt,3200,EUR,,,,,,card
+C3003,2026-09-30,balances,net_worth,Net worth,-2250,EUR,,,,,,card
+C3003,2026-09-30,cashflow,monthly_surplus,Monthly surplus,335,EUR,,,,,,card
+C3003,2026-09-30,cashflow,emergency_buffer,0.35,months,,,,,,card
+C3003,2026-09-30,alerts,low_buffer,Low emergency buffer,true,bool,,cashflow,1,,Emergency buffer is below one month of expenses,alert
+C3003,2026-09-30,next_needs_30d,buffer_building,Build emergency buffer,true,bool,,cashflow,1,0.91,Low buffer leaves little room for unexpected costs,alert
+C3003,2026-09-30,personalization,module_cashflow,Safe to spend,cashflow,text,,cashflow,1,,Short-term monthly control is the highest-value task,hero
+C3003,2026-09-30,personalization,module_buffer,Emergency buffer,buffer,text,,cashflow,2,,Buffer is currently below one month of expenses,alert
+C3003,2026-09-30,personalization,module_upcoming,Upcoming expenses,upcoming,text,,cashflow,3,,Upcoming bills are more useful than secondary analytics,card
+C3003,2026-09-30,personalization,module_recommendation,Next step,recommendation,text,,cashflow,4,,One actionable recommendation keeps the experience simple,card`
+};
+
+function parseCSV(text){
+  const rows=[]; let row=[],field="",quoted=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i],n=text[i+1];
+    if(c==='"'){ if(quoted&&n==='"'){field+='"';i++} else quoted=!quoted; }
+    else if(c===","&&!quoted){row.push(field);field="";}
+    else if((c==="\n"||c==="\r")&&!quoted){
+      if(c==="\r"&&n==="\n")i++;
+      row.push(field);field="";
+      if(row.some(x=>x.trim()!==""))rows.push(row);
+      row=[];
+    } else field+=c;
+  }
+  if(field.length||row.length){row.push(field);rows.push(row)}
+  if(rows.length<2)throw new Error("CSV must contain a header row and report rows.");
+  const headers=rows[0].map(x=>x.trim());
+  COLUMNS.forEach(c=>{if(!headers.includes(c))throw new Error("Missing column: "+c)});
+  return rows.slice(1).map(r=>{
+    const o={};headers.forEach((h,i)=>o[h]=(r[i]??"").trim());
+    o.rank=o.rank===""?null:Number(o.rank);o.probability=o.probability===""?null:Number(o.probability);
+    return o;
+  });
+}
+
+let rows=parseCSV(SAMPLE_CSV.sophie);
+const section=s=>rows.filter(r=>r.section===s);
+const item=(s,key)=>section(s).find(r=>r.item===key);
+const value=(s,key,fallback=null)=>item(s,key)?.value ?? fallback;
+const num=(s,key,fallback=0)=>{const x=Number(value(s,key,fallback));return Number.isFinite(x)?x:fallback};
+const euro=n=>"€"+Math.round(Number(n)||0).toLocaleString("en-BE");
+const pct=n=>(Number(n)||0).toFixed(0)+"%";
+const cap=s=>String(s||"").replace(/_/g," ").replace(/\b\w/g,m=>m.toUpperCase());
+
+function complexity(){
+  let base=Number(value("profile","ui_complexity",3))||3;
+  base+=Number(document.getElementById("density").value||0);
+  return Math.max(1,Math.min(5,base));
+}
+
+function mapModuleKey(raw){
+  const v=String(raw||"").toLowerCase();
+  if(v.includes("life_event")||v.includes("move_message"))return "life_event_message";
+  if(v.includes("financial_overview"))return "financial_overview";
+  if(v.includes("cashflow"))return "cashflow";
+  if(v.includes("spending"))return "spending_chart";
+  if(v.includes("goal"))return "goal_progress";
+  if(v.includes("investment_overview")||v.includes("portfolio"))return "investment_overview";
+  if(v.includes("asset_allocation")||v.includes("allocation"))return "asset_allocation";
+  if(v.includes("buffer"))return "buffer";
+  if(v.includes("upcoming"))return "upcoming";
+  if(v.includes("recommendation")||v.includes("idle_cash"))return "recommendation";
+  return v;
+}
+
+function explicitModules(){
+  return section("personalization")
+    .filter(r=>r.ui_hint!=="hidden")
+    .sort((a,b)=>(a.rank??999)-(b.rank??999))
+    .map(r=>({key:mapModuleKey(r.value||r.item),label:r.label,rank:r.rank,score:Math.max(30,101-(r.rank||8)*8),reason:r.reason,ui_hint:r.ui_hint,source:"personalization"}));
+}
+
+function fallbackModules(){
+  const candidates=[];
+  const push=(key,label,base,row,hint="card")=>{
+    if(!row)return;
+    const rank=row.rank||5,prob=row.probability==null?0.7:row.probability;
+    const score=Math.round(Math.min(99,base+(6-rank)*5+prob*10));
+    candidates.push({key,label,rank,score,reason:row.reason||"Derived from the customer report.",ui_hint:row.ui_hint||hint,source:row.section});
+  };
+  const alerts=section("alerts").sort((a,b)=>(a.rank??99)-(b.rank??99));
+  const events=section("life_events").sort((a,b)=>(a.rank??99)-(b.rank??99));
+  const needs=section("next_needs_30d").sort((a,b)=>(a.rank??99)-(b.rank??99));
+  const recs=section("recommendations").sort((a,b)=>(a.rank??99)-(b.rank??99));
+  if(alerts[0]) push(alerts[0].category==="insurance"?"life_event_message":"buffer",alerts[0].label,78,alerts[0],"alert");
+  if(events[0]) push("life_event_message",events[0].label,74,events[0],"alert");
+  if(needs[0]) push(needs[0].category==="cashflow"?"cashflow":"recommendation",needs[0].label,70,needs[0],"card");
+  if(recs[0]) push("recommendation",recs[0].label,64,recs[0],"card");
+  push("financial_overview","Financial overview",52,{reason:"Core cross-product context from balances.",rank:5,probability:.7,section:"balances"},"card");
+  if(section("investments").length) push("investment_overview","Investments",55,{reason:"Investment facts are available for this customer.",rank:4,probability:.8,section:"investments"},"card");
+  push("cashflow","Cash flow",57,{reason:"Cash-flow facts are available for this customer.",rank:4,probability:.8,section:"cashflow"},"card");
+  const seen=new Set();
+  return candidates.sort((a,b)=>b.score-a.score).filter(x=>!seen.has(x.key)&&seen.add(x.key));
+}
+
+function modules(){
+  const useFallback=document.getElementById("fallback").checked;
+  const explicit=explicitModules();
+  return (!useFallback&&explicit.length)?explicit:fallbackModules();
+}
+
+function scoreBadge(m){return document.getElementById("showWhy").checked?`<span class="score-badge">${m.score}</span>`:""}
+function reason(m){return document.getElementById("showWhy").checked?`<div class="explain">${m.reason||"Ranked by the personalization model."}</div>`:""}
+function cardClass(m,index){const h=m.ui_hint||"card";return `card ${index===0||h==="hero"?"hero":h==="alert"?"alert":""}`}
+
+function renderModule(m,index,c){
+  const klass=cardClass(m,index),chip=scoreBadge(m);
+  if(m.key==="life_event_message"){
+    const ev=section("life_events")[0],need=section("next_needs_30d")[0],rec=section("recommendations")[0];
+    const moved=ev?.item==="moved_house" || need?.item==="insurance_address";
+    const title=moved?"One thing to update after your move":(need?.label||ev?.label||"A timely update");
+    const text=moved?"Your home insurance may still use your previous address. Would you like to review it now?":(rec?.value||need?.reason||ev?.reason||"There is a relevant action for you.");
+    return `<article class="${klass} message">${chip}<div class="message-top"><div class="kate"><span class="kate-icon">K</span>Kate</div><span class="pill">${ev?.category||need?.category||"personal"}</span></div><p><b>${title}</b><br>${text}</p><div class="actions"><button class="btn">${moved?"Review insurance address":"Review now"}</button><button class="btn secondary">Later</button></div>${reason(m)}</article>`;
+  }
+  if(m.key==="financial_overview"){
+    const cur=num("balances","current_account"),sav=num("balances","savings"),inv=num("balances","investments"),debt=num("balances","debt"),nw=num("balances","net_worth",cur+sav+inv-debt);
+    return `<article class="${klass}">${chip}<h4>Financial overview</h4><div class="big">${euro(nw)}</div><div class="subtle">net position</div><div class="three"><div class="stat">Cash & savings<b>${euro(cur+sav)}</b></div><div class="stat">Investments<b>${euro(inv)}</b></div><div class="stat">Debt<b>${euro(debt)}</b></div></div>${reason(m)}</article>`;
+  }
+  if(m.key==="cashflow"){
+    const surplus=num("cashflow","monthly_surplus"),buf=num("cashflow","emergency_buffer"),income=num("income","net_income");
+    return `<article class="${klass}">${chip}<h4>Cash flow</h4><div class="metric-row"><div><div class="big">${euro(surplus)}</div><div class="subtle">monthly surplus</div></div><div class="delta">${income?Math.round(surplus/income*100):0}% savings capacity</div></div><div class="progress"><span style="width:${Math.min(100,Math.max(6,(surplus/Math.max(income,1))*200))}%"></span></div>${c>=3?`<div class="subtle">Emergency buffer: ${buf.toFixed(1)} months</div>`:""}${reason(m)}</article>`;
+  }
+  if(m.key==="buffer"){
+    const b=num("cashflow","emergency_buffer");
+    return `<article class="${klass}">${chip}<h4>Emergency buffer</h4><div class="big">${b.toFixed(1)} months</div><div class="subtle">${b<1?"Below the one-month threshold":b<3?"Still building":"Healthy short-term reserve"}</div><div class="progress"><span style="width:${Math.min(100,b/4*100)}%"></span></div>${reason(m)}</article>`;
+  }
+  if(m.key==="spending_chart"){
+    const expenses=section("monthly_expenses").filter(r=>r.period);
+    const byPeriod={};expenses.forEach(r=>{byPeriod[r.period]=(byPeriod[r.period]||0)+Number(r.value||0)});
+    const keys=Object.keys(byPeriod).sort(),vals=keys.map(k=>byPeriod[k]),max=Math.max(...vals,1);
+    return `<article class="${klass}">${chip}<h4>Spending trend</h4><div class="metric-row"><div class="big">${vals.length?euro(vals.at(-1)):euro(0)}</div><div class="delta">latest month</div></div><div class="chart">${vals.map(v=>`<div class="bar" style="height:${25+75*v/max}%"></div>`).join("")}</div><div class="legend"><span>${keys[0]||""}</span><span>${keys.at(-1)||""}</span></div>${reason(m)}</article>`;
+  }
+  if(m.key==="investment_overview"){
+    const inv=num("balances","investments");
+    const alloc=section("investments").filter(r=>r.unit==="pct");
+    return `<article class="${klass}">${chip}<h4>Investments</h4><div class="big">${euro(inv)}</div><div class="subtle">invested assets</div>${c>=4&&alloc.length?`<div class="list">${alloc.map(r=>`<div class="row"><span>${r.label}</span><span>${r.value}%</span></div>`).join("")}</div>`:""}${reason(m)}</article>`;
+  }
+  if(m.key==="asset_allocation"){
+    const alloc=section("investments").filter(r=>r.unit==="pct");
+    return `<article class="${klass}">${chip}<h4>Asset allocation</h4><div class="list">${alloc.map(r=>`<div class="row"><span>${r.label}</span><span>${r.value}%</span></div>`).join("")}</div>${reason(m)}</article>`;
+  }
+  if(m.key==="recommendation"){
+    const rec=section("recommendations").sort((a,b)=>(a.rank??99)-(b.rank??99))[0];
+    const alert=section("alerts").sort((a,b)=>(a.rank??99)-(b.rank??99))[0];
+    return `<article class="${klass}">${chip}<h4>Recommended next step</h4><div class="card-title">${rec?.label||alert?.label||m.label}</div><div class="subtle">${rec?.reason||alert?.reason||m.reason}</div><div class="actions"><button class="btn">Review</button></div>${reason(m)}</article>`;
+  }
+  if(m.key==="upcoming"){
+    const need=section("next_needs_30d")[0];
+    return `<article class="${klass}">${chip}<h4>Next 30 days</h4><div class="card-title">${need?.label||"Upcoming financial needs"}</div><div class="subtle">${need?.reason||"Relevant upcoming items are shown here."}</div>${reason(m)}</article>`;
+  }
+  if(m.key==="goal_progress"){
+    const rec=section("recommendations").find(r=>r.category==="goal")||section("next_needs_30d").find(r=>r.category==="goal");
+    return `<article class="${klass}">${chip}<h4>${m.label||"Goal progress"}</h4><div class="big">63%</div><div class="subtle">${rec?.label||"Active financial goal"}</div><div class="progress"><span style="width:63%"></span></div>${reason(m)}</article>`;
+  }
+  return `<article class="${klass}">${chip}<h4>${m.label||cap(m.key)}</h4><div class="subtle">This module is driven by the CSV personalization row <code>${m.key}</code>.</div>${reason(m)}</article>`;
+}
+
+function render(){
+  const mods=modules(),c=complexity(),count=Math.min(mods.length,[4,5,6,7,8][c-1]);
+  const visible=mods.slice(0,count);
+  const name=value("profile","first_name","Customer"),profile=value("profile","financial_profile","personalized");
+  document.getElementById("title").textContent=`${name}’s dashboard`;
+  document.getElementById("hello").textContent=`Good evening, ${name}`;
+  document.getElementById("avatar").textContent=name[0]?.toUpperCase()||"C";
+  document.getElementById("profileBadge").textContent=cap(profile);
+  document.getElementById("complexityBadge").textContent=`Complexity ${c} / 5`;
+  document.getElementById("countBadge").textContent=`${count} modules`;
+  document.getElementById("headline").textContent=visible.length?`${visible[0].label||cap(visible[0].key)} is most relevant right now.`:"Your dashboard is personalized.";
+  document.getElementById("dashboard").innerHTML=visible.map((m,i)=>renderModule(m,i,c)).join("");
+  document.getElementById("topPriority").textContent=visible[0]?`${visible[0].label||visible[0].key} · ${visible[0].score}`:"—";
+  const usingExplicit=!document.getElementById("fallback").checked&&explicitModules().length>0;
+  document.getElementById("layoutSource").textContent=usingExplicit?"personalization section":"fallback importance engine";
+  const signals=[...section("alerts"),...section("life_events"),...section("next_needs_30d")].sort((a,b)=>(a.rank??99)-(b.rank??99)).slice(0,3);
+  document.getElementById("activeSignals").textContent=signals.length?signals.map(x=>x.label).join(" · "):"No urgent signal";
+  document.getElementById("priorityList").innerHTML=mods.map(m=>`<div class="priority-row"><div><div class="priority-name">${m.label||cap(m.key)}</div><div class="track"><span style="width:${m.score}%"></span></div></div><div class="score">${m.score}</div></div>`).join("");
+}
+
+document.getElementById("sample").addEventListener("change",e=>{rows=parseCSV(SAMPLE_CSV[e.target.value]);document.getElementById("status").textContent="Loaded synthetic long-format report.";render()});
+document.getElementById("density").addEventListener("change",render);
+document.getElementById("showWhy").addEventListener("change",render);
+document.getElementById("fallback").addEventListener("change",render);
+document.getElementById("file").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  const reader=new FileReader();reader.onload=()=>{try{rows=parseCSV(reader.result);document.getElementById("status").textContent=`Loaded ${f.name}: ${rows.length} facts.`;render()}catch(err){document.getElementById("status").textContent="CSV error: "+err.message}};reader.readAsText(f);
+});
+render();
+</script>
+</body>
+</html>
