@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KBC Challenge - Knowing the Moment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/simple.min.css">
+  <style>
+    /* Clean, spacious design optimized for video presentations */
+    .reveal { font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .reveal .slide-background { background-color: #F8F9FA; } 
+    
+    /* Headers */
+    .reveal h1 { color: #002855; font-weight: 800; font-size: 80px; margin-bottom: 20px; }
+    .reveal h2 { color: #00AEEF; font-weight: 700; font-size: 60px; margin-bottom: 50px; text-transform: none; }
+    
+    /* Body Text */
+    .reveal p, .reveal li { 
+        font-size: 38px; 
+        line-height: 1.4; 
+        text-align: left; 
+        color: #212529; 
+        margin-bottom: 24px;
+    }
+    
+    .reveal ul { display: block; padding-left: 1.2em; }
+    
+    /* Accents & Highlights */
+    .highlight-box {
+        background: #EAF4F4;
+        border-left: 12px solid #00AEEF;
+        padding: 30px;
+        border-radius: 8px;
+        margin-top: 30px;
+    }
+    .kbc-blue { color: #00AEEF; font-weight: bold; }
+    .kbc-accent { color: #F59F00; font-weight: bold; }
+
+    /* Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    
+    /* Custom Timeline Example Block */
+    .timeline-block {
+        background: white;
+        border: 2px solid #DEE2E6;
+        border-radius: 12px;
+        padding: 20px;
+        font-family: monospace;
+        font-size: 26px;
+        color: #495057;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .timeline-arrow {
+        color: #00AEEF;
+        font-weight: bold;
+        font-size: 40px;
+    }
+
+    /* Table Styling for Results */
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 32px;
+        margin-top: 20px;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .results-table th { background-color: #002855; color: white; padding: 15px; text-align: left; }
+    .results-table td { padding: 15px; border-bottom: 2px solid #DEE2E6; }
+    .results-table tr:nth-child(even) { background-color: #F1F3F5; }
+    .metric-win { font-weight: bold; color: #2B8A3E; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Title -->
+      <section>
+        <h1>Knowing the Moment</h1>
+        <h2>When a Customer Needs Us</h2>
+        <div class="highlight-box">
+            <p style="font-size: 42px; font-weight: bold; margin-bottom: 10px; color: #002855;">KBC Challenge · Proof of Concept </p>
+            <p style="font-size: 36px; margin: 0;">We read every channel as one timeline to predict what each customer will need in the next 30 days .</p>
+        </div>
+        <div class="timeline-block" style="margin-top: 40px; text-align: center;">
+            <span style="color:#E63946">mcc=8011</span> + <span style="color:#2B8A3E">search=kinderbijslag</span> + <span style="color:#E63946">mcc=5621</span> + <span style="color:#F59F00">spend.health</span> + <span style="color:#E63946">mcc=8062</span><br>
+            <span class="timeline-arrow">↓</span><br>
+            <strong style="font-size: 32px; color: #002855;">PREPARE_FOR_BABY 91% </strong>
+        </div>
+      </section>
+
+      <!-- Slide 2: The Core Problem & Paper -->
+      <section>
+        <h2>The Inspiration: TIMeSynC</h2>
+        <div class="grid-2">
+            <div>
+                <p><strong>The Problem:</strong></p>
+                <ul>
+                    <li>Bank data sits in many tables at different time resolutions (swipes by second, statements by month, products by year) .</li>
+                    <li>Classic models flatten this data into hand-made features and lose the sequence of events .</li>
+                </ul>
+            </div>
+            <div>
+                <p><strong>The Solution:</strong></p>
+                <ul>
+                    <li>Put every record from every channel into one time-sorted token stream .</li>
+                    <li>On over 30M Capital One customers, TIMeSynC beats SASRec .</li>
+                    <li>Recall@1 improves by +7.8% relative to SASRec .</li>
+                </ul>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: How It Works (Implementation) -->
+      <section>
+        <h2>Fully Implemented Components</h2>
+        <p>We translated the paper directly into our KBC code architecture :</p>
+        <div class="grid-2" style="margin-top: 40px;">
+            <div style="background: white; padding: 30px; border-radius: 8px; border-left: 6px solid #00AEEF;">
+                <p style="font-weight: bold; margin-bottom: 10px;">Flattening & Quantization</p>
+                <p style="font-size: 32px;">All channels become one stream of time, field name, field value, and product . Amounts become bins, so numbers act as tokens .</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; border-left: 6px solid #2B8A3E;">
+                <p style="font-weight: bold; margin-bottom: 10px;">Time & Product Fusion</p>
+                <p style="font-size: 32px;">Embeddings keep track of "which field / which account" and capture point-in-time product ownership .</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; border-left: 6px solid #F59F00;">
+                <p style="font-weight: bold; margin-bottom: 10px;">TimeAliBi Attention</p>
+                <p style="font-size: 32px;">Attention decays dynamically with the time gap between events .</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 8px; border-left: 6px solid #E63946;">
+                <p style="font-weight: bold; margin-bottom: 10px;">Causal Masking</p>
+                <p style="font-size: 32px;">A prediction strictly only sees events before its own moment, preventing data leakage .</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: The Architecture -->
+      <section>
+        <h2>One Timeline In, Two Predictions Out</h2>
+        <div class="grid-2">
+            <div>
+                <p style="color: #00AEEF; font-weight: bold;">1. Encoder (Context)</p>
+                <ul style="font-size: 32px;">
+                    <li>Raw transactions (merchant, MCC, amount, type) .</li>
+                    <li>Monthly spend per category, savings & investment balances .</li>
+                    <li>App logins, searches, and product enrollments .</li>
+                </ul>
+            </div>
+            <div>
+                <p style="color: #00AEEF; font-weight: bold;">2. Decoder (Intents)</p>
+                <ul style="font-size: 32px;">
+                    <li>Cross-attention to context before the query time using TimeAliBi .</li>
+                    <li>Outputs two heads: "Next intent" and "Needs in next 30 days" .</li>
+                </ul>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 30px; padding: 20px;">
+            <p style="font-size: 32px; text-align: center; margin: 0;">A small model (2 layers, 64 dimensions, 4 heads) trains in about 12 minutes on a laptop .</p>
+        </div>
+      </section>
+
+      <!-- Slide 5: KBC Specific Additions -->
+      <section>
+        <h2>What We Added for KBC</h2>
+        <ul style="margin-top: 40px;">
+            <li><strong>30-Day Window:</strong> We added a head to predict which needs will appear in the next 30 days, rather than just the next single intent .</li>
+            <li><strong>Life Events Mapping:</strong> 30-day needs roll up into macro life events (e.g., baby, car, home, bike, investing) .</li>
+            <li><strong>KBC Format:</strong> The KBC sample JSON goes straight into our data flattening pipeline .</li>
+            <li><strong>Actionable Evidence:</strong> The decoder's cross-attention directly names the events behind each prediction (e.g., `transaction.mcc=8011` for a gynaecologist) .</li>
+        </ul>
+      </section>
+
+      <!-- Slide 6: Results -->
+      <section>
+        <h2>Context Finds Life Events</h2>
+        <p>Evaluated on a test set of the last 3 months across 3,000 customers :</p>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Popularity </th>
+                    <th>SASRec </th>
+                    <th>TIMeSynC </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Right need in Top 3</td>
+                    <td>0.29</td>
+                    <td>0.55</td>
+                    <td class="metric-win">0.84</td>
+                </tr>
+                <tr>
+                    <td>Needs in next 30 days (PR-AUC)</td>
+                    <td>0.02</td>
+                    <td>0.15</td>
+                    <td class="metric-win">0.51</td>
+                </tr>
+                <tr>
+                    <td>Life-Event (Recall@1)</td>
+                    <td>0.00</td>
+                    <td>0.13</td>
+                    <td class="metric-win">0.63</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 28px; margin-top: 20px; color: #6C757D;">Note: Our gap is larger than the paper because the synthetic data has strong planted signals; real KBC data will be noisier .</p>
+      </section>
+
+      <!-- Slide 7: What The Model Says -->
+      <section>
+        <h2>What The Model Says</h2>
+        <p>Predictions come with the exact transactions that drove them, enabling advisor verification :</p>
+        <div class="grid-2" style="margin-top: 40px;">
+            <div style="background: white; padding: 25px; border-radius: 8px; border-top: 6px solid #2B8A3E; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+                <p style="font-size: 32px; font-weight: bold; margin-bottom: 10px;">🏠 Real Estate</p>
+                <p style="font-size: 28px;">After notary + mortgage + home policies → <strong>Renovation loan (34%)</strong> .</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 8px; border-top: 6px solid #00AEEF; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+                <p style="font-size: 32px; font-weight: bold; margin-bottom: 10px;">🚗 Mobility</p>
+                <p style="font-size: 28px;">After garage purchase + BIV tax + car policy → <strong>Roadside assistance (30%)</strong> .</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 8px; border-top: 6px solid #F59F00; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+                <p style="font-size: 32px; font-weight: bold; margin-bottom: 10px;">👶 Family</p>
+                <p style="font-size: 28px;">Gynaecologist visits (MCC 8011) + maternity store (5621) + hospital (8062) → <strong>Baby on the way (91%)</strong> .</p>
+            </div>
+            <div style="background: white; padding: 25px; border-radius: 8px; border-top: 6px solid #E63946; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+                <p style="font-size: 32px; font-weight: bold; margin-bottom: 10px;">🚲 Micro-Mobility</p>
+                <p style="font-size: 28px;">Right after e-bike purchase → <strong>Bike insurance (61%)</strong> .</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Scalable Output -->
+      <section>
+        <h2>High-Speed Reporting Contract</h2>
+        <div class="grid-2">
+            <div>
+                <p>The system outputs one long-format CSV per customer .</p>
+                <ul>
+                    <li>Includes fields like `life_events`, `next_needs_30d`, and `product_propensity` .</li>
+                    <li>Easily runs as a nightly batch or immediately at user login .</li>
+                </ul>
+            </div>
+            <div style="background: #EAF4F4; padding: 40px; border-radius: 16px; border: 4px solid #00AEEF; text-align: center;">
+                <p style="font-size: 60px; margin: 0; font-weight: bold;">⚡ 16 ms</p>
+                <p style="font-size: 32px; color: #002855; font-weight: bold;">per customer </p>
+                <p style="font-size: 28px; margin-top: 20px;">3,003 customers processed in 47 seconds on one laptop .</p>
+                <p style="font-size: 28px;">2.3M customers scales to ~10 hours on one machine, or minutes across workers .</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Next Steps -->
+      <section>
+        <h2>Limitations & Path to Production</h2>
+        <div class="highlight-box" style="border-left-color: #E63946;">
+            <p style="font-size: 36px; font-weight: bold;">Current Limitations:</p>
+            <ul>
+                <li>All numbers come from synthetic training data, which proves the method works but doesn't measure it directly on KBC customers .</li>
+                <li>Transfer to bare transactions is uneven; customers with few transactions get weak predictions once a need is met .</li>
+            </ul>
+        </div>
+        <div class="highlight-box" style="border-left-color: #2B8A3E; margin-top: 30px;">
+            <p style="font-size: 36px; font-weight: bold;">Next Steps with Real Data:</p>
+            <ul>
+                <li>Train on real KBC intent labels (app actions, advisor notes, product applications) .</li>
+                <li>Add memo text and integrate additional channels like call centres and branches .</li>
+                <li>Run the paper's ablations on real data to see which parts matter most .</li>
+            </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1920,
+      height: 1080,
+      margin: 0.1,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      slideNumber: true,
+      transition: 'fade',
+      controls: false,
+      progress: true
+    });
+  </script>
+</body>
+</html>
